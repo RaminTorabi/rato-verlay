@@ -8,12 +8,12 @@
   <longdescription lang="en">
     VictoriaMetrics is a fast, cost-effective, and scalable time-series
     database. The single-node binary handles ingestion, storage, and
-    querying for fleets where a clustered deployment would be overkill.
+    querying for deployments where a clustered setup would be overkill.
 
     Compatible with InfluxDB line protocol, Graphite, OpenTSDB, Prometheus
-    remote_write, and OpenTelemetry. The fleet uses it as the central
-    sink for sensor data (BLE temperature/humidity, USB temper devices,
-    smartctl readings) and pushes via the InfluxDB write API.
+    remote_write, and OpenTelemetry — useful as a central sink for
+    sensor data, application metrics, or any other write-heavy
+    time-series workload.
 
     This is the prebuilt-binary variant: it pulls the upstream's
     statically-linked release artifacts (victoria-metrics-prod plus the

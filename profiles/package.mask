@@ -17,11 +17,10 @@ net-fs/amazon-efs-utils-bin
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-12)
 # app-metrics/victoria-metrics — new ebuild, single-node time-series
-# database. Not yet validated end-to-end on a real Gentoo host.
-# Cirrus is the first deployment target. Unmask only in cirrus's
-# /etc/portage/package.unmask/ so we can verify on one host before
-# rolling out to the rest of the fleet. acct-* helpers stay unmasked
-# since they're harmless (just create a user/group on emerge).
+# database. Not yet validated end-to-end on a real Gentoo host. Mask
+# until a host has unmasked it locally and verified install + run.
+# acct-* helpers stay unmasked since they are harmless (they only
+# create a service user/group on emerge).
 app-metrics/victoria-metrics
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-14)

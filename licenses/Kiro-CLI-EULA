@@ -11,10 +11,9 @@ AWS agreements linked below, and in the LICENSE file shipped inside
 the upstream kirocli tarball.
 
 The verbatim EULA text from the tarball will replace this file in a
-follow-up commit once the tarball is unpacked in CI (see Task 6.1 /
-Task 6.2 of the rato-verlay spec). That unpacking is deliberately
-deferred here because the Kiro CLI tarball is roughly 265 MB and must
-not be downloaded as part of repository scaffolding.
+follow-up commit once the tarball is unpacked. That unpacking is
+deliberately deferred here because the Kiro CLI tarball is roughly
+265 MB and must not be downloaded as part of repository scaffolding.
 
 Licensor and scope
 ------------------

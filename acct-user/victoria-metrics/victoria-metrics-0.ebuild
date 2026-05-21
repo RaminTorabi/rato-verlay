@@ -7,7 +7,7 @@ EAPI=8
 # Owns /var/lib/victoria-metrics and runs the systemd unit.
 inherit acct-user
 
-# Dynamic UID — no fleet-wide convention requires pinning.
+# Dynamic UID — pinning is unnecessary for this service.
 ACCT_USER_ID=-1
 ACCT_USER_GROUPS=( victoria-metrics )
 # /var/lib/victoria-metrics is created by the app ebuild; this

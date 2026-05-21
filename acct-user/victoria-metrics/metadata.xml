@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription>
+    Service account for app-metrics/victoria-metrics{,-bin}. Owns
+    /var/lib/victoria-metrics and runs the systemd unit. Dynamic UID,
+    no interactive shell.
+  </longdescription>
+</pkgmetadata>
