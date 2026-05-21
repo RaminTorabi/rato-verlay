@@ -17,7 +17,16 @@ on:
 
 permissions:
   id-token: write   # Required for OIDC
-  contents: write   # Required to push
+  contents: write   # Required to push refs to GitHub
+  # NOTE: GITHUB_TOKEN cannot push commits that modify
+  # .github/workflows/* files - GitHub blocks this by design,
+  # regardless of any `permissions:` setting. If a CodeCommit commit
+  # touches this workflow file, the sync will fail with "refusing to
+  # allow a GitHub App to create or update workflow ... without
+  # workflows permission". Workaround: push such commits to GitHub
+  # manually from a dev machine using a PAT/SSH key with the
+  # `workflow` scope. The daily/weekly bash flow never edits workflow
+  # files, so this is rare.
 
 jobs:
   sync:
