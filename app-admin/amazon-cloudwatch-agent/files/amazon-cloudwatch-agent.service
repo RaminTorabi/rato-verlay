@@ -1,0 +1,25 @@
+[Unit]
+Description=Amazon CloudWatch Agent
+Documentation=https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# start-amazon-cloudwatch-agent is the canonical entrypoint. It reads the
+# TOML config translated by config-translator from the JSON config the
+# operator wrote, then exec's /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent
+# with the right -config args. Running the bare agent binary without args
+# (the previous ExecStart) dies immediately with
+# `E! Error running agent: no config file specified`, causing systemd to
+# restart the unit every 15s until we finally write a config AND run
+# the config-translator step ourselves.
+#
+# Paths: AWS's upstream packaging installs everything under
+# /opt/aws/amazon-cloudwatch-agent/; we mirror that in src_install.
+ExecStart=/opt/aws/amazon-cloudwatch-agent/bin/start-amazon-cloudwatch-agent
+Restart=on-failure
+RestartSec=60s
+KillMode=process
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,24 @@
+[Unit]
+Description=amazon-ssm-agent
+Documentation=https://docs.aws.amazon.com/systems-manager/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/usr/bin/
+ExecStart=/usr/bin/amazon-ssm-agent
+KillMode=process
+
+# Match upstream packaging/linux/amazon-ssm-agent.service:
+# - Restart=always so transient failures (e.g. IMDS blip) self-recover.
+# - RestartPreventExitStatus=194 — the agent uses 194 to signal that
+#   it has requested a system reboot; systemd should honor that by
+#   NOT restarting the agent (the system is shutting down).
+# - RestartSec=90 — avoid thundering herd on IMDS right after boot.
+Restart=always
+RestartPreventExitStatus=194
+RestartSec=90
+
+[Install]
+WantedBy=multi-user.target

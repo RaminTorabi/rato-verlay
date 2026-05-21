@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>16882282+RaminTorabi@users.noreply.github.com</email>
+		<name>Ramin Torabi</name>
+	</maintainer>
+	<longdescription lang="en">
+		Amazon DCV remote display client (viewer) for Linux. Connects to
+		Amazon DCV servers for low-latency remote desktop streaming.
+		Installs under /opt/amazon-dcv-viewer/ with a wrapper in /usr/bin/
+		so bundled libraries do not conflict with system packages.
+	</longdescription>
+	<upstream>
+		<remote-id type="aws">amazon-dcv-client</remote-id>
+	</upstream>
+</pkgmetadata>

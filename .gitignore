@@ -1,0 +1,14 @@
+# Python virtualenv used by the property-test harness under scripts/tests/.
+# See scripts/tests/README.md for the full setup flow.
+.venv/
+
+# Byte-compiled caches
+__pycache__/
+*.py[cod]
+
+# pytest / Hypothesis state
+.pytest_cache/
+.hypothesis/
+
+# Cargo / Rust build output (lambda/version-poller/)
+target/

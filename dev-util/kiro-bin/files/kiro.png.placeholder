@@ -1,0 +1,30 @@
+Placeholder — the real icon is NOT committed to this repository.
+================================================================
+
+The upstream Kiro tarball ships the canonical application icon at:
+
+    Kiro/resources/app/resources/linux/code.png
+
+(i.e. inside the tarball that SRC_URI fetches, at
+${WORKDIR}/Kiro/resources/app/resources/linux/code.png after unpack,
+or equivalently ${S}/resources/app/resources/linux/code.png with
+S="${WORKDIR}/Kiro").
+
+We deliberately do NOT commit a copy of that icon to this git
+repository: the upstream Kiro EULA does not clearly grant
+redistribution rights for the artwork, and both ebuilds in this
+overlay set RESTRICT="strip mirror bindist" specifically because the
+binaries are not freely redistributable.
+
+Instead, src_install() in dev-util/kiro-bin/kiro-bin-*.ebuild
+installs the icon directly from the unpacked tarball:
+
+    newicon -s 256 "${S}/resources/app/resources/linux/code.png" kiro.png
+
+This file only exists so the presence of dev-util/kiro-bin/files/ is
+obvious to a reader of the repository tree, and so the XDG assets
+directory is not empty apart from kiro.desktop.
+
+If a future upstream tarball drops the bundled icon, update the
+src_install step to extract the icon from whatever path the new
+tarball uses, or ewarn and fall back to a generic icon.

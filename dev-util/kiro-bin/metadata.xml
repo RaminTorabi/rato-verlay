@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    The Kiro desktop IDE — an agentic AI development environment distributed
+    as a prebuilt amd64 binary. The upstream tarball is fetched from AWS's
+    official desktop release endpoint (prod.download.desktop.kiro.dev). It
+    unpacks to /opt/kiro and the kiro launcher is symlinked into /usr/bin,
+    with an XDG desktop entry and an icon installed under /usr/share/ so the
+    IDE integrates with standard Linux desktop environments.
+
+    Full end-to-end verification (pkgcheck scan, pkgdev manifest, emerge in
+    a gentoo/stage3 container, and the headless kiro -v smoke test) is
+    deferred to CI because Portage is not available in the dev-container
+    where this ebuild was authored. See docs/deferred-to-ci.md at the
+    repository root for the current list of CI-only checks.
+  </longdescription>
+</pkgmetadata>

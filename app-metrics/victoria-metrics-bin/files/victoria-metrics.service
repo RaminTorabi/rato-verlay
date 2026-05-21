@@ -1,0 +1,52 @@
+# /lib/systemd/system/victoria-metrics.service
+# Time-series database for the home fleet.
+#
+# Baseline unit installed by the ebuild. Per-host tuning
+# (retention, listen address, memory cap, optional replication)
+# goes into a drop-in at
+#   /etc/systemd/system/victoria-metrics.service.d/override.conf
+# laid down by the ansible victoriametrics role.
+
+[Unit]
+Description=VictoriaMetrics time-series database
+Documentation=https://docs.victoriametrics.com/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=victoria-metrics
+Group=victoria-metrics
+
+# Default ExecStart — the ansible role replaces this via a drop-in.
+# The bare invocation is enough to start cleanly if no role override
+# is in place yet.
+ExecStart=/opt/victoriametrics/victoria-metrics-prod \
+  -storageDataPath=/var/lib/victoria-metrics \
+  -retentionPeriod=10y \
+  -httpListenAddr=0.0.0.0:8428
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=1048576
+
+# Hardening — VM only needs to read its binary and write to its
+# storage path. Network access is implicit via the listen address.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+# Go binaries need W+X for runtime code generation; do NOT enable
+# MemoryDenyWriteExecute=yes here — VM panics on startup with it on.
+ReadWritePaths=/var/lib/victoria-metrics
+
+[Install]
+WantedBy=multi-user.target

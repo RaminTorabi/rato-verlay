@@ -1,0 +1,62 @@
+Kiro-EULA — license summary for dev-util/kiro-bin
+=================================================
+
+*** NOTICE ***
+
+This file is NOT an official Kiro license text. It is a summary
+placeholder kept in the rato-verlay repository so that Portage's
+ACCEPT_LICENSE mechanism can gate the merge of dev-util/kiro-bin on a
+well-defined license token. The authoritative terms live in the AWS
+agreements linked below, and in the LICENSE.txt file shipped inside
+the upstream Kiro tarball.
+
+The verbatim EULA text from the tarball will replace this file in a
+follow-up commit once the tarball is unpacked in CI (see Task 6.1 /
+Task 6.2 of the rato-verlay spec). That unpacking is deliberately
+deferred here because the Kiro IDE tarball is roughly 300 MB and must
+not be downloaded as part of repository scaffolding.
+
+Licensor and scope
+------------------
+
+The Kiro desktop IDE (https://kiro.dev/) is a proprietary product of
+Amazon Web Services, Inc. ("AWS"). Use of the Kiro binary distributed
+via dev-util/kiro-bin is governed by:
+
+  1. The AWS Customer Agreement, available at
+     https://aws.amazon.com/agreement
+  2. The AWS Service Terms, available at
+     https://aws.amazon.com/service-terms
+     (including any Kiro-specific section or preview-program terms
+     added by AWS to those Service Terms).
+  3. Any additional terms presented by the Kiro application itself
+     at first launch or contained in the LICENSE.txt shipped inside
+     the upstream tarball under Kiro/resources/app/LICENSE.txt.
+
+By accepting this license token (via ACCEPT_LICENSE="Kiro-EULA"),
+you acknowledge that you have read and agree to the documents above.
+
+Redistribution
+--------------
+
+Redistribution of the Kiro binary is not permitted outside the terms
+set by AWS. For that reason:
+
+  * rato-verlay does NOT host or mirror the Kiro tarball. The ebuild
+    fetches the tarball directly from AWS's public distribution
+    endpoint at build time.
+  * The dev-util/kiro-bin ebuild carries
+    RESTRICT="strip mirror bindist" so that Gentoo mirrors and
+    binhosts do not attempt to redistribute either the distfile or
+    any binpkg derived from it.
+
+Warranty
+--------
+
+Kiro is provided by AWS "AS IS" without warranty of any kind, per the
+AWS Customer Agreement and AWS Service Terms linked above.
+
+--- END OF SUMMARY PLACEHOLDER ---
+
+This is NOT an official license text — see the linked AWS agreements
+for the authoritative terms.

@@ -1,0 +1,35 @@
+# Mask pre-release / beta versions that were tagged upstream but are
+# not the latest stable release. Users can unmask individually if needed.
+#
+# To unmask: add the atom to /etc/portage/package.unmask/rato-verlay
+
+# CloudWatch Agent 1.300067.0 — tagged upstream but not marked as
+# latest stable release (latest stable is 1.300066.1 as of 2026-04-25)
+=app-admin/amazon-cloudwatch-agent-1.300067.0
+
+# ami-gentoo Update builders <16882282+RaminTorabi@users.noreply.github.com> (2026-05-05)
+# amazon-efs-utils-bin — new, prebuilt binary repackaging of AWS's
+# official AL2023 RPM. Not yet validated end-to-end on a real Gentoo
+# Update AMI build + live S3 Files mount. Unmask only in the
+# ami-gentoo Update builder's package.unmask so we can validate
+# before stable deployment.
+net-fs/amazon-efs-utils-bin
+
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-12)
+# app-metrics/victoria-metrics — new ebuild, single-node time-series
+# database. Not yet validated end-to-end on a real Gentoo host.
+# Cirrus is the first deployment target. Unmask only in cirrus's
+# /etc/portage/package.unmask/ so we can verify on one host before
+# rolling out to the rest of the fleet. acct-* helpers stay unmasked
+# since they're harmless (just create a user/group on emerge).
+app-metrics/victoria-metrics
+
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-14)
+# app-metrics/victoria-metrics-bin — prebuilt-binary repackaging of
+# upstream's static Go release artifacts (victoria-metrics-prod plus
+# vmutils bundle). Mutually exclusive with the source-build sibling
+# (app-metrics/victoria-metrics) at the RDEPEND blocker level. Hard
+# masked until validated on a host. Per rato-verlay convention, -bin
+# is preferred over the source build for non-trivial third-party
+# software (kiro-bin, vlc-bin, amazon-efs-utils-bin pattern).
+app-metrics/victoria-metrics-bin

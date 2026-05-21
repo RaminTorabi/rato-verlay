@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+	<maintainer type="person">
+		<email>16882282+RaminTorabi@users.noreply.github.com</email>
+		<name>Ramin Torabi</name>
+	</maintainer>
+	<longdescription lang="en">
+		Prebuilt binary distribution of amazon-efs-utils. Fetches the
+		official x86_64 RPM from amazon-efs-utils.aws.com (built by AWS
+		for Amazon Linux 2023) and repackages it for Gentoo.
+
+		This exists because the source build requires GCC 13 or earlier
+		(the AWS-LC FIPS module's assembler delocator fails on GCC 14+)
+		and Gentoo's rolling release typically ships a newer GCC. The
+		binary RPM is statically linked against AL2023's toolchain,
+		sidestepping the build-system incompatibility.
+
+		Users who need a source build should install net-fs/amazon-efs-utils
+		instead and provide GCC 13 via BDEPEND or a CC override.
+	</longdescription>
+	<upstream>
+		<remote-id type="github">aws/efs-utils</remote-id>
+	</upstream>
+</pkgmetadata>

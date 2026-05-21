@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    NICE DCV is a high-performance remote display protocol that provides
+    a secure way to deliver remote desktops and application streaming from
+    any cloud or data center to any device. This is a prebuilt binary
+    package extracted from the upstream RPM distribution.
+  </longdescription>
+</pkgmetadata>

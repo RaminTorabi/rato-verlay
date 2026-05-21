@@ -1,0 +1,16 @@
+NICE DCV END USER LICENSE AGREEMENT
+
+PLACEHOLDER — This file must be replaced with the verbatim EULA text
+extracted from the upstream NICE DCV RPM payload before production use.
+
+The actual NICE DCV EULA governs the use of the NICE DCV software.
+Users must accept this license via Portage's ACCEPT_LICENSE mechanism
+before the package can be merged.
+
+To obtain the full EULA text:
+  1. Download the upstream RPM tarball from
+     https://d1uj6qtbmh3dt5.cloudfront.net/nice-dcv-el9-x86_64.tgz
+  2. Extract the server RPM and locate the LICENSE file within.
+  3. Replace this placeholder with the verbatim content.
+
+See: https://aws.amazon.com/hpc/dcv/

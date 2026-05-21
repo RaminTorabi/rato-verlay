@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    AWS Systems Manager Agent (SSM Agent) is Amazon software that runs on
+    Amazon EC2 instances, edge devices, on-premises servers, and virtual
+    machines. SSM Agent processes requests from the Systems Manager service
+    and configures the machine as specified. Built from source using the
+    Gentoo Go toolchain with vendored dependencies.
+  </longdescription>
+</pkgmetadata>

@@ -1,0 +1,14 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Kiro
+GenericName=Integrated Development Environment
+Comment=Kiro desktop IDE — agentic AI development environment
+Exec=/usr/bin/kiro %U
+Icon=kiro
+Terminal=false
+Categories=Development;IDE;
+StartupNotify=true
+StartupWMClass=kiro
+Keywords=IDE;Editor;Development;AI;
+MimeType=text/plain;inode/directory;application/x-kiro-workspace;

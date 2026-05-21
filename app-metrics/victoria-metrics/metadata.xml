@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    VictoriaMetrics is a fast, cost-effective, and scalable time-series
+    database. The single-node binary handles ingestion, storage, and
+    querying for fleets where a clustered deployment would be overkill.
+
+    Compatible with InfluxDB line protocol, Graphite, OpenTSDB, Prometheus
+    remote_write, and OpenTelemetry. The fleet uses it as the central
+    sink for sensor data (BLE temperature/humidity, USB temper devices,
+    smartctl readings) and pushes via the InfluxDB write API.
+
+    Built from source using the Gentoo Go toolchain. Includes the
+    victoria-metrics single-node binary plus the vmagent / vmctl /
+    vmbackup / vmrestore companion tools for ingestion proxying,
+    backfill migrations, and snapshot management.
+  </longdescription>
+</pkgmetadata>

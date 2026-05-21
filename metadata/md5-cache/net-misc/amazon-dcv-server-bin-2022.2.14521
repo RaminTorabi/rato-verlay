@@ -1,0 +1,14 @@
+BDEPEND=|| ( app-arch/rpm2targz )
+DEFINED_PHASES=install unpack
+DESCRIPTION=Amazon DCV remote display server (prebuilt binary)
+EAPI=8
+HOMEPAGE=https://aws.amazon.com/hpc/dcv/
+INHERIT=rpm
+KEYWORDS=~amd64
+LICENSE=NICE-DCV-EULA
+RDEPEND=sys-libs/glibc x11-libs/libX11 x11-libs/libXext media-libs/mesa
+RESTRICT=strip mirror bindist
+SLOT=0
+SRC_URI=https://d1uj6qtbmh3dt5.cloudfront.net/2022.2/Servers/nice-dcv-2022.2-14521-el8-x86_64.tgz -> amazon-dcv-server-bin-2022.2.14521.tgz
+_eclasses_=eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	estack	c61c368a76fdf3a82fdf8dbaebea3804	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	rpm	716d8645cb3f94e78951eda6c33e0546
+_md5_=634fde0180629a750fd712b105b065e5

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    Amazon CloudWatch Agent collects metrics and logs from Amazon EC2
+    instances, on-premises servers, and containers. It publishes them to
+    Amazon CloudWatch for monitoring and operational insights. Built from
+    source using the Gentoo Go toolchain with vendored dependencies.
+  </longdescription>
+</pkgmetadata>

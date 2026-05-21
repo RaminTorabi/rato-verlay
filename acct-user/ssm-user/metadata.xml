@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription>
+    System user for AWS Systems Manager Session Manager. The user is
+    created at Base AMI build time so its UID is stable across rebuilds.
+    amazon-ssm-agent falls back to creating it dynamically on first
+    Session Manager connection if this package is not installed.
+  </longdescription>
+</pkgmetadata>

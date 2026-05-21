@@ -1,0 +1,11 @@
+DEFINED_PHASES=install
+DESCRIPTION=Kiro command-line tools (kiro-cli, kiro-cli-chat, kiro-cli-term)
+EAPI=8
+HOMEPAGE=https://kiro.dev/docs/cli/
+KEYWORDS=~amd64
+LICENSE=Kiro-CLI-EULA
+RDEPEND=>=sys-libs/glibc-2.34
+RESTRICT=strip mirror bindist
+SLOT=0
+SRC_URI=https://prod.download.cli.kiro.dev/stable/2.2.0/kirocli-x86_64-linux.tar.xz -> kiro-cli-bin-2.2.0.tar.xz
+_md5_=a81660ff0d2b84f9df5363de5c4649f3

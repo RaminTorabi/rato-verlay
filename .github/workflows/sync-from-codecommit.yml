@@ -1,0 +1,91 @@
+name: Sync from CodeCommit
+
+on:
+  schedule:
+    # Run daily at 05:00 UTC - after the pipeline (04:00 UTC start,
+    # ~45min for overlay testing on a pre-built Gentoo AMI) has
+    # finished pushing to CodeCommit (main, dev, and test).
+    - cron: '0 5 * * *'
+  workflow_dispatch: {}
+
+permissions:
+  id-token: write   # Required for OIDC
+  contents: write   # Required to push
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GitHub repo (main)
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          ref: main
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v6
+        with:
+          role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/rato-verlay-github-sync
+          aws-region: eu-north-1
+
+      - name: Install git-remote-codecommit
+        run: pip install git-remote-codecommit
+
+      - name: Add CodeCommit remote
+        run: |
+          git remote add codecommit codecommit::eu-north-1://rato-verlay || \
+            git remote set-url codecommit codecommit::eu-north-1://rato-verlay
+
+      - name: Fetch all branches from CodeCommit
+        run: git fetch codecommit main dev test
+
+      - name: Sync each branch from CodeCommit to GitHub
+        # The daily pipeline writes main first, then mirrors HEAD to
+        # dev and test on CodeCommit. We sync all three here so the
+        # GitHub mirror stays consistent across branches.
+        #
+        # Strategy per branch:
+        #   1. Try fast-forward merge into the locally checked-out
+        #      branch (only main is checked out; for others we use
+        #      `git push origin <ref>:refs/heads/<branch>` directly).
+        #   2. If FF is not possible (history rewrites, e.g. weekly
+        #      squash that the daily then mirrors), force-push.
+        #
+        # `git push --force-with-lease=<branch>:<expected_sha>` is
+        # the safe form: it refuses to push if origin/<branch> moved
+        # since we last fetched it. Combined with the fact that this
+        # workflow is the only writer to GitHub for these branches,
+        # we cannot lose work.
+        run: |
+          set -euo pipefail
+          git fetch origin main dev test || true
+          for branch in main dev test; do
+            cc_sha=$(git rev-parse "codecommit/${branch}")
+            gh_sha=$(git rev-parse "origin/${branch}" 2>/dev/null || echo "")
+
+            if [[ "${cc_sha}" == "${gh_sha}" ]]; then
+              echo "${branch}: already in sync (${cc_sha})"
+              continue
+            fi
+
+            echo "${branch}: codecommit=${cc_sha} github=${gh_sha:-<none>}"
+
+            # Try fast-forward first (safer for normal operation).
+            if [[ -n "${gh_sha}" ]] && \
+               git merge-base --is-ancestor "${gh_sha}" "${cc_sha}"; then
+              echo "${branch}: fast-forward push to GitHub"
+              git push origin "${cc_sha}:refs/heads/${branch}"
+            else
+              # History diverged (weekly squash, manual rewrite, etc.).
+              # Force-with-lease is the safe form: refuses if origin
+              # moved since our fetch.
+              echo "${branch}: force-with-lease push to GitHub"
+              if [[ -n "${gh_sha}" ]]; then
+                git push --force-with-lease="${branch}:${gh_sha}" \
+                  origin "${cc_sha}:refs/heads/${branch}"
+              else
+                # No remote branch yet; create it.
+                git push origin "${cc_sha}:refs/heads/${branch}"
+              fi
+            fi
+          done
