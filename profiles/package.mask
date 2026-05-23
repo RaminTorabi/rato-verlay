@@ -1,16 +1,19 @@
-# Mask pre-release / beta versions that were tagged upstream but are
-# not the latest stable release. Users can unmask individually if needed.
-#
-# To unmask: add the atom to /etc/portage/package.unmask/rato-verlay
+# Atoms in this file are deliberately masked: the ebuild is shipped
+# in the overlay (so you can pin to it if you know you want it) but
+# does not get installed by default. Unmask any of them in your own
+# /etc/portage/package.unmask/rato-verlay if you want to opt in.
 
-# CloudWatch Agent 1.300067.0 — tagged upstream but not marked as
-# latest stable release (latest stable is 1.300066.1 as of 2026-04-25)
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-04-25)
+# CloudWatch Agent 1.300067.0 was tagged upstream but is not the
+# release marked as latest stable (latest stable: 1.300066.1). Mask
+# the newer tag so a default `emerge` keeps picking 1.300066.1; unmask
+# explicitly if you want to track the upstream tag aggressively.
 =app-admin/amazon-cloudwatch-agent-1.300067.0
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-05)
-# amazon-efs-utils-bin — prebuilt binary repackaging of AWS's
-# official AL2023 RPM. Not yet validated end-to-end on a real Gentoo
-# Update AMI build + live S3 Files mount. Unmask in the consumer's
-# /etc/portage/package.unmask/ once you have validated install + run
-# on the host.
+# amazon-efs-utils-bin is a prebuilt-binary repackaging of AWS's
+# official AL2023 RPM. The source-build sibling (net-fs/amazon-efs-utils,
+# 9999 live ebuild) is the default install path; the -bin variant is
+# kept available for hosts that cannot afford a Rust + Python build.
+# Unmask explicitly if -bin is what you want.
 net-fs/amazon-efs-utils-bin
