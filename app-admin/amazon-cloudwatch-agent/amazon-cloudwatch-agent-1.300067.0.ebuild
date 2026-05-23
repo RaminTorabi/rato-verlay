@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror network-sandbox"
 
-BDEPEND=">=dev-lang/go-1.21"
+BDEPEND=">=dev-lang/go-1.25"
 
 RDEPEND="
 	sys-libs/glibc

@@ -1,4 +1,4 @@
-BDEPEND=>=dev-lang/go-1.21 >=dev-lang/go-1.24.11:= app-arch/unzip virtual/pkgconfig
+BDEPEND=>=dev-lang/go-1.25 >=dev-lang/go-1.24.11:= app-arch/unzip virtual/pkgconfig
 DEFINED_PHASES=compile install unpack
 DESCRIPTION=Amazon CloudWatch Agent for metrics and logs collection
 EAPI=8
@@ -11,4 +11,4 @@ RESTRICT=mirror network-sandbox
 SLOT=0
 SRC_URI=https://github.com/aws/amazon-cloudwatch-agent/archive/refs/tags/v1.300067.0.tar.gz -> amazon-cloudwatch-agent-1.300067.0.tar.gz
 _eclasses_=toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	flag-o-matic	fd3558f73f6503093adee69adf41020d	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	sysroot	4c36abaf94ebd3ab32f8abea9a444121	go-env	fca4e820393c2eac25a944be8bdf6a3a	go-module	22cfabf3120ed3f7bcd8b4a7697fbfba	systemd	a964c0cbe818b5729da1dbfcee5be861
-_md5_=7af61f360dff71986e198d0ff7451193
+_md5_=21e8ac35034648ba8115bf0733d49231
