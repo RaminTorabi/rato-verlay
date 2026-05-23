@@ -7,28 +7,10 @@
 # latest stable release (latest stable is 1.300066.1 as of 2026-04-25)
 =app-admin/amazon-cloudwatch-agent-1.300067.0
 
-# ami-gentoo Update builders <16882282+RaminTorabi@users.noreply.github.com> (2026-05-05)
-# amazon-efs-utils-bin — new, prebuilt binary repackaging of AWS's
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-05)
+# amazon-efs-utils-bin — prebuilt binary repackaging of AWS's
 # official AL2023 RPM. Not yet validated end-to-end on a real Gentoo
-# Update AMI build + live S3 Files mount. Unmask only in the
-# ami-gentoo Update builder's package.unmask so we can validate
-# before stable deployment.
+# Update AMI build + live S3 Files mount. Unmask in the consumer's
+# /etc/portage/package.unmask/ once you have validated install + run
+# on the host.
 net-fs/amazon-efs-utils-bin
-
-# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-12)
-# app-metrics/victoria-metrics — new ebuild, single-node time-series
-# database. Not yet validated end-to-end on a real Gentoo host. Mask
-# until a host has unmasked it locally and verified install + run.
-# acct-* helpers stay unmasked since they are harmless (they only
-# create a service user/group on emerge).
-app-metrics/victoria-metrics
-
-# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-14)
-# app-metrics/victoria-metrics-bin — prebuilt-binary repackaging of
-# upstream's static Go release artifacts (victoria-metrics-prod plus
-# vmutils bundle). Mutually exclusive with the source-build sibling
-# (app-metrics/victoria-metrics) at the RDEPEND blocker level. Hard
-# masked until validated on a host. Per rato-verlay convention, -bin
-# is preferred over the source build for non-trivial third-party
-# software (kiro-bin, vlc-bin, amazon-efs-utils-bin pattern).
-app-metrics/victoria-metrics-bin
