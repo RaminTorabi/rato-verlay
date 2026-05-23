@@ -1,63 +1,51 @@
-Kiro-CLI-EULA — license summary for dev-util/kiro-cli-bin
-=========================================================
+©2025 Amazon.com, Inc. or its affiliates (collectively, "Amazon"). All Rights Reserved.
 
-*** NOTICE ***
+This software is licensed to you as "AWS Content" under the AWS Customer Agreement (https://aws.amazon.com/agreement/), or other written agreement between you and Amazon governing your use of AWS services, and the AWS Intellectual Property License (https://aws.amazon.com/legal/aws-ip-license-terms/).
 
-This file is NOT an official Kiro CLI license text. It is a summary
-placeholder kept in the rato-verlay repository so that Portage's
-ACCEPT_LICENSE mechanism can gate the merge of dev-util/kiro-cli-bin
-on a well-defined license token. The authoritative terms live in the
-AWS agreements linked below, and in the LICENSE file shipped inside
-the upstream kirocli tarball.
+----
 
-The verbatim EULA text from the tarball will replace this file in a
-follow-up commit once the tarball is unpacked. That unpacking is
-deliberately deferred here because the Kiro CLI tarball is roughly
-265 MB and must not be downloaded as part of repository scaffolding.
+The text above is the canonical Kiro license, as published at
+https://kiro.dev/license/ (the same page covers Kiro IDE and Kiro CLI). The
+upstream Kiro CLI tarball does not ship a LICENSE file inside the bundle;
+the kiro.dev/license page is the authoritative location for the terms.
 
-Licensor and scope
-------------------
+For open-source attribution of components statically linked into the Kiro
+CLI (Bun, JavaScriptCore, WebKit, tinycc, etc.) run:
+
+    kiro-cli dashboard
+
+then click "Show License" at the bottom of the preferences page.
 
 The Kiro CLI suite (https://kiro.dev/docs/cli/) consists of the
-command-line binaries kiro-cli, kiro-cli-chat, and kiro-cli-term. It
-is a proprietary product of Amazon Web Services, Inc. ("AWS"). Use of
-the Kiro CLI binaries distributed via dev-util/kiro-cli-bin is
-governed by:
+command-line binaries kiro-cli, kiro-cli-chat, and kiro-cli-term. It is a
+proprietary product of Amazon Web Services, Inc. ("AWS"). Use of the Kiro
+CLI binaries distributed via dev-util/kiro-cli-bin is governed by:
 
-  1. The AWS Customer Agreement, available at
-     https://aws.amazon.com/agreement
-  2. The AWS Service Terms, available at
-     https://aws.amazon.com/service-terms
-     (including any Kiro-specific section or preview-program terms
-     added by AWS to those Service Terms).
-  3. Any additional terms presented by kiro-cli itself at first
-     invocation or contained in the LICENSE file shipped inside the
-     upstream tarball.
+  1. The AWS Customer Agreement
+       https://aws.amazon.com/agreement/
+  2. The AWS Intellectual Property License
+       https://aws.amazon.com/legal/aws-ip-license-terms/
+  3. Any additional terms presented by kiro-cli itself at first launch.
 
-By accepting this license token (via ACCEPT_LICENSE="Kiro-CLI-EULA"),
-you acknowledge that you have read and agree to the documents above.
+By accepting this license token (via ACCEPT_LICENSE="Kiro-CLI-EULA"), you
+acknowledge that you have read and agree to the documents above.
 
 Redistribution
 --------------
 
-Redistribution of the Kiro CLI binaries is not permitted outside the
-terms set by AWS. For that reason:
+Redistribution of the Kiro CLI binaries is not permitted outside the terms
+set by AWS. For that reason:
 
-  * rato-verlay does NOT host or mirror the Kiro CLI tarball. The
-    ebuild fetches the tarball directly from AWS's public
-    distribution endpoint at build time.
-  * The dev-util/kiro-cli-bin ebuild carries
-    RESTRICT="strip mirror bindist" so that Gentoo mirrors and
-    binhosts do not attempt to redistribute either the distfile or
-    any binpkg derived from it.
+  * rato-verlay does NOT host or mirror the Kiro CLI tarball. The ebuild
+    fetches the tarball directly from AWS's public distribution endpoint
+    at build time.
+  * The dev-util/kiro-cli-bin ebuild carries RESTRICT="strip mirror bindist"
+    so that Gentoo mirrors and binhosts do not attempt to redistribute
+    either the distfile or any binpkg derived from it.
 
 Warranty
 --------
 
-The Kiro CLI is provided by AWS "AS IS" without warranty of any kind,
-per the AWS Customer Agreement and AWS Service Terms linked above.
-
---- END OF SUMMARY PLACEHOLDER ---
-
-This is NOT an official license text — see the linked AWS agreements
-for the authoritative terms.
+The Kiro CLI is provided by AWS "AS IS" without warranty of any kind, per
+the AWS Customer Agreement and AWS Intellectual Property License linked
+above.
