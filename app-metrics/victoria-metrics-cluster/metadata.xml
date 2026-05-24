@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    VictoriaMetrics cluster mode — the horizontally scalable variant of the
+    VictoriaMetrics time-series database. The cluster decomposes the
+    single-node binary into three independent services that communicate
+    over RPC and follow a shared-nothing architecture:
+
+      - vmstorage stores raw samples and serves queries filtered by time
+        range and labels. Each vmstorage node is autonomous; nodes do
+        not communicate with each other.
+      - vminsert receives ingested data and shards it across vmstorage
+        nodes via consistent hashing on metric name and labels.
+      - vmselect runs queries by fanning out to all configured vmstorage
+        nodes and merging the results.
+
+    Each service can be scaled independently. Cluster mode also adds
+    multi-tenancy (accountID/projectID namespaces in URLs and labels)
+    and optional replication via -replicationFactor.
+
+    Built from source using the Gentoo Go toolchain. For ingestion rates
+    below ~1M samples/sec the single-node sibling (app-metrics/victoria-
+    metrics) is recommended — it is simpler to operate and has lower
+    per-node overhead.
+  </longdescription>
+</pkgmetadata>

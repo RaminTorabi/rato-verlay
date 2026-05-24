@@ -1,0 +1,61 @@
+# /lib/systemd/system/vmstorage.service
+# VictoriaMetrics cluster — vmstorage role.
+#
+# Stores raw samples and serves queries filtered by time range and
+# labels. Listens on three TCP ports (override via drop-in if you
+# need different addresses):
+#
+#   :8482 — http for /metrics, /health, /snapshot/* and /internal/*
+#   :8400 — RPC, accepts data from vminsert nodes
+#   :8401 — RPC, accepts queries from vmselect nodes
+#
+# Per-host tuning (retention, listen addresses, dedup, downsampling,
+# storage path) belongs in
+#   /etc/systemd/system/vmstorage.service.d/override.conf
+# managed by your configuration-management tool of choice.
+
+[Unit]
+Description=VictoriaMetrics cluster — vmstorage
+Documentation=https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=victoria-metrics
+Group=victoria-metrics
+
+# Default ExecStart — override via drop-in for production. The bare
+# invocation is enough to start cleanly in a single-host toy setup.
+ExecStart=/opt/victoriametrics/vmstorage-prod \
+  -storageDataPath=/var/lib/victoria-metrics/cluster/vmstorage \
+  -retentionPeriod=10y \
+  -httpListenAddr=0.0.0.0:8482 \
+  -vminsertAddr=0.0.0.0:8400 \
+  -vmselectAddr=0.0.0.0:8401
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=1048576
+
+# Hardening — vmstorage only needs to read its binary and write to
+# its storage path. Network access is implicit via the listen
+# addresses above.
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+# Go binaries need W+X for runtime code generation; do NOT enable
+# MemoryDenyWriteExecute=yes here — VM panics on startup with it on.
+ReadWritePaths=/var/lib/victoria-metrics/cluster/vmstorage
+
+[Install]
+WantedBy=multi-user.target

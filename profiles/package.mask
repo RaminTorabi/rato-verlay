@@ -17,3 +17,19 @@
 # kept available for hosts that cannot afford a Rust + Python build.
 # Unmask explicitly if -bin is what you want.
 net-fs/amazon-efs-utils-bin
+
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-24)
+# VictoriaMetrics cluster mode (vminsert + vmselect + vmstorage) is shipped
+# in the overlay for completeness and to give a clean upgrade path if a
+# fleet ever outgrows the single-node sibling. It is NOT the recommended
+# default: for ingestion rates below ~1M samples/sec the single-node
+# variant (app-metrics/victoria-metrics{,-bin}) is simpler to operate and
+# uses ~3x less memory. Unmask explicitly via /etc/portage/package.unmask
+# if cluster mode is what you actually want; otherwise the single-node
+# pair stays the daily driver.
+#
+# Same masking rationale applies to both the source-build and prebuilt
+# variants — they are siblings, not alternatives, and the !! blocker
+# between them prevents Portage from picking both at once.
+app-metrics/victoria-metrics-cluster
+app-metrics/victoria-metrics-cluster-bin

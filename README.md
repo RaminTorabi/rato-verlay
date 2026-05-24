@@ -25,6 +25,8 @@ repository:
 | `amazon-dcv-viewer-bin` | `net-misc` | `~amd64` | `NICE-DCV-EULA` | Amazon DCV Linux client / viewer (prebuilt binary) |
 | `victoria-metrics` | `app-metrics` | `~amd64` | `Apache-2.0` | VictoriaMetrics single-node TSDB, built from Go source |
 | `victoria-metrics-bin` | `app-metrics` | `~amd64` | `Apache-2.0` | VictoriaMetrics single-node TSDB, prebuilt official binary |
+| `victoria-metrics-cluster` | `app-metrics` | `~amd64` (hard-masked) | `Apache-2.0` | VictoriaMetrics cluster (vminsert + vmselect + vmstorage), built from Go source |
+| `victoria-metrics-cluster-bin` | `app-metrics` | `~amd64` (hard-masked) | `Apache-2.0` | VictoriaMetrics cluster, prebuilt official binaries |
 | `ssm-user` | `acct-user`, `acct-group` | `~amd64` | `GPL-2` | UID/GID owned by `amazon-ssm-agent` |
 | `victoria-metrics` | `acct-user`, `acct-group` | `~amd64` | `GPL-2` | UID/GID owned by `victoria-metrics{,-bin}` |
 

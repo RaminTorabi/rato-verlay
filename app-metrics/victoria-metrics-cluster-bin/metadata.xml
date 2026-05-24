@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    VictoriaMetrics cluster mode — the horizontally scalable variant of the
+    VictoriaMetrics time-series database. The cluster decomposes the
+    single-node binary into three independent services:
+
+      - vmstorage — stores raw samples and serves queries.
+      - vminsert  — accepts ingested data and shards it across vmstorage.
+      - vmselect  — fans queries out across vmstorage and merges results.
+
+    This is the prebuilt-binary variant: the upstream
+    victoria-metrics-linux-amd64-vN.M.P-cluster.tar.gz release artifact
+    is fetched from GitHub Releases and unpacked directly into
+    /opt/victoriametrics/. No Go toolchain or compilation is required —
+    install completes in seconds. Use the source-build sibling
+    (app-metrics/victoria-metrics-cluster) when binary repackaging is
+    not acceptable for policy reasons.
+
+    For deployments below ~1M samples/sec the single-node sibling
+    (app-metrics/victoria-metrics-bin) is recommended over the cluster.
+  </longdescription>
+</pkgmetadata>

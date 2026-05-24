@@ -1,0 +1,55 @@
+# /lib/systemd/system/vminsert.service
+# VictoriaMetrics cluster — vminsert role.
+#
+# Accepts ingested samples on http :8480 (write API at
+# /insert/<accountID>/<suffix>) and shards them across the
+# configured vmstorage nodes via consistent hashing on metric name
+# and labels.
+#
+# The default -storageNode points at 127.0.0.1:8400 so a single-host
+# toy cluster Just Works after `systemctl start vmstorage vminsert
+# vmselect`. For real multi-host deployments override
+# -storageNode (and -replicationFactor if you want application-level
+# replication) via a drop-in at
+#   /etc/systemd/system/vminsert.service.d/override.conf
+# managed by your configuration-management tool of choice.
+
+[Unit]
+Description=VictoriaMetrics cluster — vminsert
+Documentation=https://docs.victoriametrics.com/victoriametrics/cluster-victoriametrics/
+After=network-online.target vmstorage.service
+Wants=network-online.target
+# vmstorage doesn't need to be Required= here: vminsert can start
+# even with no reachable storage nodes (it queues / re-routes), but
+# After= keeps the boot order sensible when both run on one host.
+
+[Service]
+Type=simple
+User=victoria-metrics
+Group=victoria-metrics
+
+ExecStart=/opt/victoriametrics/vminsert-prod \
+  -httpListenAddr=0.0.0.0:8480 \
+  -storageNode=127.0.0.1:8400
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=1048576
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectKernelLogs=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+# vminsert holds no on-disk state of its own; no ReadWritePaths=
+# entry is needed beyond what ProtectSystem=strict already permits.
+
+[Install]
+WantedBy=multi-user.target
