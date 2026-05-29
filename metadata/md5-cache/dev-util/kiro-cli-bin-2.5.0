@@ -7,5 +7,5 @@ LICENSE=Kiro-CLI-EULA
 RDEPEND=>=sys-libs/glibc-2.34
 RESTRICT=strip mirror bindist
 SLOT=0
-SRC_URI=https://prod.download.cli.kiro.dev/stable/2.4.2/kirocli-x86_64-linux.tar.xz -> kiro-cli-bin-2.4.2.tar.xz
-_md5_=418213d7c43aaabfe0580d2d0f43fba4
+SRC_URI=https://prod.download.cli.kiro.dev/stable/2.5.0/kirocli-x86_64-linux.tar.xz -> kiro-cli-bin-2.5.0.tar.xz
+_md5_=3df882cb3ab1bcee3d24a775969a06a3
