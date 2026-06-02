@@ -33,3 +33,9 @@ net-fs/amazon-efs-utils-bin
 # between them prevents Portage from picking both at once.
 app-metrics/victoria-metrics-cluster
 app-metrics/victoria-metrics-cluster-bin
+
+# retention-floor: dev-util/kiro-cli-bin
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=dev-util/kiro-cli-bin-2.4.0
