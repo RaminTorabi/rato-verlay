@@ -72,7 +72,7 @@ src_compile() {
 
 src_install() {
 	# Install layout matches the prebuilt sibling so the eventual
-	# ansible role drop-ins are package-agnostic. The binaries
+	# systemd drop-in overrides are package-agnostic. The binaries
 	# live alongside the single-node victoria-metrics-prod under
 	# /opt/victoriametrics/.
 	exeinto /opt/victoriametrics

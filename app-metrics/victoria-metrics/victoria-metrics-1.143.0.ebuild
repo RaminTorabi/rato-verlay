@@ -86,8 +86,8 @@ pkg_postinst() {
 	elog "  - Storage:       /var/lib/victoria-metrics (owned by victoria-metrics)"
 	elog "  - Systemd unit:  victoria-metrics.service"
 	elog ""
-	elog "Tune retention/listen/memory via the ansible victoriametrics role"
-	elog "(roles/victoriametrics in ansible-playbooks-gentoo). The role drops"
-	elog "an override at /etc/systemd/system/victoria-metrics.service.d/."
+	elog "Tune retention, listen address, and memory by overriding"
+	elog "ExecStart in a systemd drop-in at"
+	elog "/etc/systemd/system/victoria-metrics.service.d/."
 	elog ""
 }

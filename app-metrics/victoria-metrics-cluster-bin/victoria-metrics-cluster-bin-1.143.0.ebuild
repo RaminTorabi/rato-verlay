@@ -38,7 +38,7 @@ RDEPEND="
 src_install() {
 	# Layout matches the source-build sibling
 	# (app-metrics/victoria-metrics-cluster) so the eventual
-	# ansible role drop-ins are package-agnostic.
+	# systemd drop-in overrides are package-agnostic.
 	exeinto /opt/victoriametrics
 	doexe "${WORKDIR}"/vminsert-prod
 	doexe "${WORKDIR}"/vmselect-prod

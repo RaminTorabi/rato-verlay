@@ -18,9 +18,9 @@ Type=simple
 User=victoria-metrics
 Group=victoria-metrics
 
-# Default ExecStart — the ansible role replaces this via a drop-in.
-# The bare invocation is enough to start cleanly if no role override
-# is in place yet.
+# Default ExecStart — override via a systemd drop-in at
+# /etc/systemd/system/victoria-metrics.service.d/. The bare
+# invocation is enough to start cleanly if no override is in place yet.
 ExecStart=/opt/victoriametrics/victoria-metrics-prod \
   -storageDataPath=/var/lib/victoria-metrics \
   -retentionPeriod=10y \
