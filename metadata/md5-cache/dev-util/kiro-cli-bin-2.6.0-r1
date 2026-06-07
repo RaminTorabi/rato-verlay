@@ -4,8 +4,8 @@ EAPI=8
 HOMEPAGE=https://kiro.dev/docs/cli/
 KEYWORDS=~amd64
 LICENSE=Kiro-CLI-EULA
-RDEPEND=>=sys-libs/glibc-2.34
+RDEPEND=>=sys-libs/glibc-2.34 media-libs/alsa-lib
 RESTRICT=strip mirror bindist
 SLOT=0
 SRC_URI=https://prod.download.cli.kiro.dev/stable/2.6.0/kirocli-x86_64-linux.tar.xz -> kiro-cli-bin-2.6.0.tar.xz
-_md5_=44cc5fad277494667962db4ccd36bf89
+_md5_=605a08d7d9b2e53bf6797b2c40d8fce3
