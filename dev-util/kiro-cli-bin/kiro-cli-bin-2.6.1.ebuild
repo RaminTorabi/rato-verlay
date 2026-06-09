@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-05-22
+# ebuild automatically verified at 2026-06-09
 EAPI=8
 
 DESCRIPTION="Kiro command-line tools (kiro-cli, kiro-cli-chat, kiro-cli-term)"
@@ -15,7 +15,13 @@ KEYWORDS="~amd64"
 RESTRICT="strip mirror bindist"
 QA_PREBUILT="opt/kiro-cli/*"
 
-RDEPEND=">=sys-libs/glibc-2.34"
+# media-libs/alsa-lib: the prebuilt kiro-cli-chat binary has
+# libasound.so.2 as a hard DT_NEEDED entry (verified via scanelf -n).
+# Without alsa-lib the kiro-cli-chat launcher fails to load. The link
+# is baked into the shipped ELF, so this is an unconditional runtime
+# dependency, not a USE-toggleable build option.
+RDEPEND=">=sys-libs/glibc-2.34
+	media-libs/alsa-lib"
 
 src_install() {
 	# Unpack entire tree under /opt/kiro-cli/
