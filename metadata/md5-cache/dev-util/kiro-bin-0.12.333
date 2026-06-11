@@ -1,0 +1,14 @@
+DEFINED_PHASES=install postinst postrm preinst
+DESCRIPTION=Kiro desktop IDE — agentic AI development environment (prebuilt binary)
+EAPI=8
+HOMEPAGE=https://kiro.dev/
+IDEPEND=dev-util/desktop-file-utils x11-misc/shared-mime-info
+INHERIT=desktop xdg
+KEYWORDS=~amd64
+LICENSE=Kiro-EULA
+RDEPEND=>=sys-libs/glibc-2.34 dev-libs/glib:2 dev-libs/nss dev-libs/nspr app-crypt/libsecret app-crypt/gcr:0[gtk] x11-libs/gtk+:3 x11-libs/libxkbcommon x11-libs/libdrm x11-libs/libX11 x11-libs/libxcb x11-libs/libXcomposite x11-libs/libXdamage x11-libs/libXext x11-libs/libXfixes x11-libs/libXrandr x11-libs/libxkbfile x11-libs/libxshmfence x11-libs/cairo x11-libs/pango media-libs/alsa-lib media-libs/mesa net-print/cups sys-apps/dbus sys-apps/util-linux
+RESTRICT=strip mirror bindist
+SLOT=0
+SRC_URI=https://prod.download.desktop.kiro.dev/releases/stable/linux-x64/signed/0.12.333/tar/kiro-ide-0.12.333-stable-linux-x64.tar.gz
+_eclasses_=desktop	26d57169ca094c04be416993844ec8bc	xdg-utils	42869b3c8d86a70ef3cf75165a395e09	xdg	3ef49a87c52c8b77c476351195dfe575
+_md5_=ded5f3f660495bd243c96d173172ad23
