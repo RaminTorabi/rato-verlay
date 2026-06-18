@@ -80,8 +80,12 @@ app-metrics/victoria-metrics-cluster-bin
 
 # weekly-verify 2026-06-13: all SRC_URIs unreachable; hard-masking (see s3://ami-gentoo-artifacts-320513496842-eu-north-1/build-logs/i-023bb24cfd1a13aa4/weekly-verify/dev-util_kiro-cli-bin_2.6.0-r1.url.log)
 
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+
 # retention-floor: dev-util/kiro-cli-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=dev-util/kiro-cli-bin-2.5.1
+=dev-util/kiro-cli-bin-2.6.0-r1
