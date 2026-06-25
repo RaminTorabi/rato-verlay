@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-05-07
+# ebuild automatically verified at 2026-06-25
 EAPI=8
 
 inherit go-module systemd
@@ -15,7 +15,7 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror network-sandbox"
 
-BDEPEND=">=dev-lang/go-1.21"
+BDEPEND=">=dev-lang/go-1.25"
 
 RDEPEND="
 	sys-libs/glibc
