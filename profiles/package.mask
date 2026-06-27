@@ -8,7 +8,6 @@
 # release marked as latest stable (latest stable: 1.300066.1). Mask
 # the newer tag so a default `emerge` keeps picking 1.300066.1; unmask
 # explicitly if you want to track the upstream tag aggressively.
-=app-admin/amazon-cloudwatch-agent-1.300067.0
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-05-05)
 # amazon-efs-utils-bin is a prebuilt-binary repackaging of AWS's
@@ -101,3 +100,9 @@ app-metrics/victoria-metrics-cluster-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 =dev-util/kiro-cli-bin-2.7.0
+
+# retention-floor: app-admin/amazon-cloudwatch-agent
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=app-admin/amazon-cloudwatch-agent-1.300064.0
