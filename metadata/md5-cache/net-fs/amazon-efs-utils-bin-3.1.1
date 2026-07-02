@@ -1,16 +1,16 @@
-BDEPEND=python_single_target_python3_11? ( dev-lang/python:3.11 ) python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) || ( app-arch/rpm2targz >=app-arch/rpm-4.19.0[zstd(+)] ) virtual/pkgconfig
+BDEPEND=python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) python_single_target_python3_14? ( dev-lang/python:3.14 ) || ( app-arch/rpm2targz >=app-arch/rpm-4.19.0[zstd(+)] ) virtual/pkgconfig
 DEFINED_PHASES=install postinst prepare setup unpack
 DESCRIPTION=Amazon EFS and S3 Files mount helpers (prebuilt binary)
 EAPI=8
 HOMEPAGE=https://github.com/aws/efs-utils
 INHERIT=python-single-r1 rpm systemd
-IUSE=python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13
+IUSE=python_single_target_python3_12 python_single_target_python3_13 python_single_target_python3_14
 KEYWORDS=~amd64
 LICENSE=MIT
-RDEPEND=python_single_target_python3_11? ( dev-lang/python:3.11 ) python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) net-fs/nfs-utils >=net-misc/stunnel-4.56 >=dev-libs/openssl-1.0.2 sys-apps/util-linux sys-apps/which sys-libs/glibc !net-fs/amazon-efs-utils
-REQUIRED_USE=^^ ( python_single_target_python3_11 python_single_target_python3_12 python_single_target_python3_13 )
+RDEPEND=python_single_target_python3_12? ( dev-lang/python:3.12 ) python_single_target_python3_13? ( dev-lang/python:3.13 ) python_single_target_python3_14? ( dev-lang/python:3.14 ) net-fs/nfs-utils >=net-misc/stunnel-4.56 >=dev-libs/openssl-1.0.2 sys-apps/util-linux sys-apps/which sys-libs/glibc !net-fs/amazon-efs-utils
+REQUIRED_USE=^^ ( python_single_target_python3_12 python_single_target_python3_13 python_single_target_python3_14 )
 RESTRICT=strip mirror bindist
 SLOT=0
 SRC_URI=https://amazon-efs-utils.aws.com/repo/rpm/amazon/2023/x86_64/amazon-efs-utils-3.1.1-1.amzn2023.x86_64.rpm -> amazon-efs-utils-bin-3.1.1.rpm
-_eclasses_=eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5	python-utils-r1	9c4180f103a0e8340bc993fc85dbdadd	python-single-r1	47d8ac9be330c9366112b78fd4f8ce57	estack	c61c368a76fdf3a82fdf8dbaebea3804	rpm	716d8645cb3f94e78951eda6c33e0546	systemd	a964c0cbe818b5729da1dbfcee5be861
-_md5_=94036e0a7e3a0dfae54c9b6bb01e8ec3
+_eclasses_=eapi9-pipestatus	d2c134036ac31c3085aebc9147f572bd	estack	c61c368a76fdf3a82fdf8dbaebea3804	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	python-single-r1	47d8ac9be330c9366112b78fd4f8ce57	python-utils-r1	18a01bee4e486884d7457cfacde74099	rpm	716d8645cb3f94e78951eda6c33e0546	systemd	a964c0cbe818b5729da1dbfcee5be861	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5
+_md5_=5dd1bdd40bc3928a89d84a2ec9f68c87

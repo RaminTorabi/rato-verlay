@@ -4,7 +4,7 @@
 # ebuild automatically verified at 2026-05-07
 EAPI=8
 
-PYTHON_COMPAT=( python3_{10..13} )
+PYTHON_COMPAT=( python3_{10..14} )
 
 # The AL2023 RPM uses Zstd payload compression. Declared before
 # `inherit rpm` so rpm.eclass's _rpm_set_globals sees it and wires up
