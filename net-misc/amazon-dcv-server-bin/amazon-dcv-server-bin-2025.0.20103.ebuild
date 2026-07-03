@@ -21,7 +21,7 @@ LICENSE="NICE-DCV-EULA"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="strip mirror bindist"
-QA_PREBUILT="opt/amazon-dcv/*"
+QA_PREBUILT="usr/libexec/dcv/* usr/lib64/dcv/* usr/bin/dcv*"
 
 RDEPEND="
 	sys-libs/glibc
@@ -44,35 +44,31 @@ src_unpack() {
 }
 
 src_install() {
-	# Install DCV tree under /opt/amazon-dcv/
-	insinto /opt/amazon-dcv
-	if [[ -d usr/lib64/dcv ]]; then
-		doins -r usr/lib64/dcv/*
-	fi
-	if [[ -d etc/dcv ]]; then
-		insinto /opt/amazon-dcv/etc
-		doins -r etc/dcv/*
-	fi
-	if [[ -d usr/bin ]]; then
-		local bin_file
-		for bin_file in usr/bin/dcv*; do
-			[[ -f "${bin_file}" ]] || continue
-			exeinto /opt/amazon-dcv/bin
-			doexe "${bin_file}"
-			local bn
-			bn=$(basename "${bin_file}")
-			dosym ../../opt/amazon-dcv/bin/"${bn}" /usr/bin/"${bn}"
-		done
-	fi
+	# The nice-dcv-server RPM already lays every file out under the FHS
+	# prefixes that DCV's own wrapper scripts (/usr/bin/dcv*) hardcode:
+	#
+	#   /usr/libexec/dcv/        backend ELF binaries (dcvserver, dcvagent,
+	#                            Xdcv, dcvsessionlauncher, ...)
+	#   /usr/lib64/dcv/          private shared libraries + modules
+	#   /usr/bin/dcv*            wrapper scripts (reference the two paths
+	#                            above via programsdir=/usr/libexec/dcv and
+	#                            pkglibdir=/usr/lib64/dcv)
+	#   /etc/dcv/                dcv.conf + default config
+	#   /etc/pam.d/dcv           PAM stack for the default "system" auth
+	#   /usr/lib/systemd/system/dcvserver.service
+	#
+	# The previous revision relocated only the libs, config, and wrappers
+	# under /opt/amazon-dcv and dropped /usr/libexec/dcv entirely, so the
+	# wrappers failed with "/usr/libexec/dcv/dcvserver: No such file or
+	# directory" and no systemd unit was ever installed. Install the
+	# extracted tree verbatim so the wrappers resolve and dcvserver.service
+	# is present + enableable.
+	local d
+	for d in usr etc opt lib; do
+		[[ -d ${d} ]] || continue
+		cp -a "${d}" "${ED}/" || die "failed to install /${d} tree"
+	done
 
-	# Fallback: ensure dcv binary is accessible
-	if [[ ! -f "${ED}/opt/amazon-dcv/bin/dcv" ]]; then
-		local dcv_bin
-		dcv_bin=$(find "${WORKDIR}" -name 'dcv' -type f -print -quit)
-		if [[ -n "${dcv_bin}" ]]; then
-			exeinto /opt/amazon-dcv/bin
-			doexe "${dcv_bin}"
-			dosym ../../opt/amazon-dcv/bin/dcv /usr/bin/dcv
-		fi
-	fi
+	[[ -f "${ED}/usr/libexec/dcv/dcvserver" ]] \
+		|| die "dcvserver backend binary missing after install - RPM layout changed"
 }
