@@ -1,0 +1,11 @@
+DEFINED_PHASES=install postinst unpack
+DESCRIPTION=Claude Code - Anthropic's agentic coding CLI (prebuilt native binary)
+EAPI=8
+HOMEPAGE=https://code.claude.com/
+KEYWORDS=~amd64
+LICENSE=Anthropic-Claude-Terms
+RDEPEND=>=sys-libs/glibc-2.34
+RESTRICT=strip mirror bindist
+SLOT=0
+SRC_URI=https://downloads.claude.ai/claude-code-releases/2.1.201/linux-x64/claude -> claude-code-bin-2.1.201
+_md5_=2115c8b2bb3c4e73c6fea657daa87f1e

@@ -1,6 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# ebuild automatically verified at 2026-07-04
 EAPI=8
 
 DESCRIPTION="Claude Code - Anthropic's agentic coding CLI (prebuilt native binary)"
