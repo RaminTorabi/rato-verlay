@@ -1,0 +1,25 @@
+Claude Desktop and Claude Code are proprietary software.
+
+    Copyright 2026 Anthropic PBC. All rights reserved.
+
+These prebuilt binaries are redistributed unmodified from Anthropic's
+official download/apt channels. Their use is governed by Anthropic's
+published terms, not by an open-source license:
+
+  - Consumer Terms of Service:  https://www.anthropic.com/legal/consumer-terms
+  - Commercial Terms of Service: https://www.anthropic.com/legal/commercial-terms
+  - Usage Policy:               https://www.anthropic.com/legal/aup
+  - Privacy Policy:             https://www.anthropic.com/legal/privacy
+
+Which terms apply depends on your Claude plan (Free/Pro/Max use the
+Consumer Terms; Team/Enterprise use the Commercial Terms). The upstream
+Claude Desktop .deb declares "License: Proprietary" (Anthropic PBC) in its
+Debian copyright file and bundles third-party components (e.g. Electron,
+under the MIT/Expat license) whose notices ship inside the package
+(LICENSES.chromium.html, usr/share/doc/claude-desktop/copyright).
+
+By accepting this license (ACCEPT_LICENSE) and installing these packages
+you acknowledge that the software is proprietary to Anthropic PBC and that
+your use is subject to the Anthropic terms linked above. No warranty is
+provided by the packager. This file is a pointer to those terms, not a
+grant of any additional rights.

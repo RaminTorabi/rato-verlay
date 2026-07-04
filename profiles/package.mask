@@ -106,3 +106,13 @@ app-metrics/victoria-metrics-cluster-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 =app-admin/amazon-cloudwatch-agent-1.300064.0
+
+# Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-07-04)
+# Anthropic Claude apps (prebuilt-binary repackages), hard-masked: shipped in
+# the overlay so they can be pinned/installed on purpose, but never pulled in
+# by a default emerge. They are proprietary (LICENSE=Anthropic-Claude-Terms)
+# and Anthropic's Linux desktop app is a BETA packaged for Debian/Ubuntu.
+# Unmask in /etc/portage/package.unmask/rato-verlay (and ACCEPT_LICENSE the
+# Anthropic-Claude-Terms) to opt in.
+dev-util/claude-code-bin
+dev-util/claude-desktop-bin
