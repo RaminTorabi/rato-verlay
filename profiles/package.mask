@@ -115,11 +115,9 @@ dev-util/claude-desktop-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 
-# retention-floor: app-admin/amazon-ssm-agent
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=app-admin/amazon-ssm-agent-3.3.4364.0
 
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
@@ -200,3 +198,9 @@ dev-util/claude-desktop-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 =dev-util/kiro-cli-bin-2.15.0
+
+# retention-floor: app-admin/amazon-ssm-agent
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=app-admin/amazon-ssm-agent-3.3.4515.0
