@@ -121,11 +121,16 @@ src_install() {
 	# distribution and must stay free for a future source package.
 	dosym ../../opt/kirocrew/AppRun /usr/bin/kirocrew-desktop
 
-	# XDG desktop entry + icon from the upstream AppDir.
+	# XDG desktop entry + icon from the upstream AppDir. The AppDir-root
+	# kirocrew-electron-mac.png is a SYMLINK into the AppDir's own
+	# usr/share/icons tree; newicon on the symlink would install a
+	# dangling link, so install the real file (1024x1024 upstream).
 	make_desktop_entry /opt/kirocrew/AppRun "Kiro Crew" kirocrew \
 		"Development;" "StartupWMClass=KiroCrew"
-	if [[ -f "${S}/kirocrew-electron-mac.png" ]]; then
-		newicon -s 256 "${S}/kirocrew-electron-mac.png" kirocrew.png
+	local icon_real
+	icon_real="$(readlink -f "${S}/kirocrew-electron-mac.png" 2>/dev/null || true)"
+	if [[ -f "${icon_real}" ]]; then
+		newicon -s 1024 "${icon_real}" kirocrew.png
 	else
 		ewarn "Upstream icon not found; desktop entry falls back to a generic icon."
 	fi
