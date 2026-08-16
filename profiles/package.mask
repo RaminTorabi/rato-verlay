@@ -112,14 +112,16 @@ dev-util/claude-code-bin
 dev-util/claude-desktop-bin
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-08-16)
-# Kiro Crew desktop (prebuilt AppImage repackage), hard-masked while the
-# package proves itself on the test branch: brand-new upstream (open-
-# sourced 2026-08-04, first releases days old) and a large Electron +
-# bundled-Python bundle that has not yet been through a weekly full-
-# verify cycle. Shipped in the overlay so it can be pinned/installed on
-# purpose, but never pulled in by a default emerge. Unmask in
-# /etc/portage/package.unmask/rato-verlay to opt in.
-dev-util/kirocrew-bin
+# dev-util/kirocrew-bin is NOT hard-masked. It was introduced masked on
+# 2026-08-16 pending verification and unmasked the same day after a full
+# verify run on cirrus: upstream fetch + Manifest hash check, a complete
+# `ebuild clean install` (only the documented benign $ORIGIN soname QA
+# notice), all install artefacts present (launcher, XDG entry, icon,
+# setuid chrome-sandbox), and ldd against the bundled Electron binary
+# resolving every DT_NEEDED from the declared RDEPEND. It stays
+# keyworded ~amd64 (accept via package.accept_keywords), so consumers do
+# NOT need a package.unmask entry - same shape as the other prebuilt
+# Kiro packages (dev-util/kiro-bin, dev-util/kiro-cli-bin).
 
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
