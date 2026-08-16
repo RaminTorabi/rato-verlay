@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <upstream>
+    <remote-id type="github">kirodotdev/KiroCrew</remote-id>
+    <bugs-to>https://github.com/kirodotdev/KiroCrew/issues</bugs-to>
+  </upstream>
+  <longdescription lang="en">
+    Kiro Crew - AWS's open-source (Apache-2.0, since 2026-08-04)
+    persistent AI agent workspace: an Electron desktop app plus a
+    bundled Python Gateway backend that keeps agent sessions running
+    across sessions, machines and events. This -bin package repackages
+    the official Linux AppImage from the kirodotdev/KiroCrew GitHub
+    releases: the AppDir is extracted at build time (no FUSE needed at
+    runtime) and installed under /opt/kirocrew, with the launcher
+    symlinked as /usr/bin/kirocrew-desktop and an XDG desktop entry +
+    icon for desktop integration. The gateway backend is bundled and
+    self-contained (no host Python); talking to the LLM uses kiro-cli
+    (dev-util/kiro-cli-bin) over the Agent Client Protocol, which the
+    app can install and sign in on first launch. Persistent state lives
+    under ~/.kiro/crew/.
+
+    Full end-to-end verification (pkgcheck scan, pkgdev manifest,
+    emerge in a gentoo/stage3 container, and a headless smoke test) is
+    deferred to CI, matching the convention of the other prebuilt
+    packages in this overlay.
+  </longdescription>
+</pkgmetadata>
