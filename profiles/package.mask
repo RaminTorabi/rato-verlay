@@ -95,11 +95,9 @@ app-metrics/victoria-metrics-cluster-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 
-# retention-floor: app-admin/amazon-cloudwatch-agent
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=app-admin/amazon-cloudwatch-agent-1.300064.0
 
 # Ramin Torabi <16882282+RaminTorabi@users.noreply.github.com> (2026-07-04)
 # Anthropic Claude apps (prebuilt-binary repackages), hard-masked: shipped in
@@ -237,14 +235,24 @@ dev-util/claude-desktop-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 
-# retention-floor: dev-util/kiro-cli-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=dev-util/kiro-cli-bin-2.16.1
 
 # retention-floor: dev-util/kiro-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 =dev-util/kiro-bin-1.0.242
+
+# retention-floor: dev-util/kiro-cli-bin
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=dev-util/kiro-cli-bin-2.16.2
+
+# retention-floor: app-admin/amazon-cloudwatch-agent
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=app-admin/amazon-cloudwatch-agent-1.300064.0
