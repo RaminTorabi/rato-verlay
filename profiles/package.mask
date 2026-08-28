@@ -237,11 +237,9 @@ dev-util/claude-desktop-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 
-# retention-floor: dev-util/kiro-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=dev-util/kiro-bin-1.0.242
 
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
@@ -267,8 +265,18 @@ dev-util/claude-desktop-bin
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
 
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+
 # retention-floor: dev-util/kiro-cli-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=dev-util/kiro-cli-bin-2.18.1
+=dev-util/kiro-cli-bin-2.19.0
+
+# retention-floor: dev-util/kiro-bin
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+=dev-util/kiro-bin-1.0.288

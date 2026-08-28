@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-08-15
+# ebuild automatically verified at 2026-08-28
 EAPI=8
 
 DESCRIPTION="Kiro command-line tools (kiro-cli, kiro-cli-chat, kiro-cli-term)"
