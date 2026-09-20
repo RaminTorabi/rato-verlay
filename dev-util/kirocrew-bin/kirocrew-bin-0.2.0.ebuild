@@ -82,12 +82,24 @@ src_install() {
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
 
-	# cp -a keeps the source top-level mode. The extracted AppDir top
-	# directory has mode 0700 upstream. As a result, /opt/kirocrew
-	# becomes readable only by root, and non-root users cannot enter
-	# the directory. Both the menu entry and kirocrew-desktop then fail.
-	# Normalize the mode to 0755, like the rest of the install tree.
-	fperms 0755 /opt/kirocrew
+	# cp -a keeps the source mode of every directory it copies. The
+	# extracted AppDir uses mode 0700 on the top directory AND on the
+	# subdirectories locales/, resources/, and usr/. As a result, these
+	# directories become readable only by root, and non-root users
+	# cannot enter them. The top directory blocks the menu entry and
+	# kirocrew-desktop. resources/ and locales/ block Electron, which
+	# reads its app code and locale data from there and exits with an
+	# EACCES error even after the top directory is opened.
+	#
+	# Normalize the whole tree with "a+rX", not just the top directory:
+	#  - "a+r" adds read for all users.
+	#  - "X" (capital) adds the traverse bit to directories only, and
+	#    to files that are already executable. Data files stay 0644.
+	# This matches the rest of the install tree and keeps the executable
+	# bits that doins would have stripped. The setuid bit on
+	# chrome-sandbox is set later, so this recursive call does not
+	# affect it.
+	fperms -R a+rX /opt/kirocrew
 
 	# The AppImage-internal desktop file (Exec=AppRun --no-sandbox) and
 	# .DirIcon are AppImage plumbing; replace with proper XDG entries.
@@ -150,6 +162,13 @@ pkg_postinst() {
 	elog "The app drives its LLM through kiro-cli (Agent Client Protocol);"
 	elog "install dev-util/kiro-cli-bin or let the first launch set it up."
 	elog "Persistent state lives under ~/.kiro/crew/ (KIROCREW_HOME to move it)."
+	elog ""
+	elog "Run kirocrew-desktop as your normal user, never with sudo or root."
+	elog "The app stores its config under ~/.config/kirocrew-electron-mac/."
+	elog "A root-owned config directory makes the app fail at start with"
+	elog "'EACCES: permission denied' on mochi-machine.json. If you see this,"
+	elog "give the directory back to your user, for example:"
+	elog "  sudo chown -R \"\${USER}:\${USER}\" ~/.config/kirocrew-electron-mac"
 }
 
 pkg_postrm() {
