@@ -82,6 +82,13 @@ src_install() {
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
 
+	# cp -a keeps the source top-level mode. The extracted AppDir top
+	# directory has mode 0700 upstream. As a result, /opt/kirocrew
+	# becomes readable only by root, and non-root users cannot enter
+	# the directory. Both the menu entry and kirocrew-desktop then fail.
+	# Normalize the mode to 0755, like the rest of the install tree.
+	fperms 0755 /opt/kirocrew
+
 	# The AppImage-internal desktop file (Exec=AppRun --no-sandbox) and
 	# .DirIcon are AppImage plumbing; replace with proper XDG entries.
 	rm -f "${dest}"/*.desktop "${dest}/.DirIcon"
