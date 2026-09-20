@@ -55,6 +55,13 @@ src_install() {
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
 
+	# cp -a keeps the source top-level mode. If the source top directory
+	# has a restrictive mode (0700), /opt/kiro becomes readable only by
+	# root, and non-root users cannot enter the directory. The launcher
+	# then fails for these users. Normalize the mode to 0755, like the
+	# rest of the install tree.
+	fperms 0755 /opt/kiro
+
 	# Drop bundled native binaries built for platforms other than the
 	# one this package targets (~amd64 = linux / x64 / glibc). Upstream
 	# ships multi-arch, multi-libc prebuilts inside node_modules (e.g.
