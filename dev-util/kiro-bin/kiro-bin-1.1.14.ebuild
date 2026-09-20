@@ -55,6 +55,23 @@ src_install() {
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
 
+	# cp -a keeps the source mode of every directory it copies. If the
+	# source top directory or any subdirectory has a restrictive mode
+	# (0700), that directory becomes readable only by root, and non-root
+	# users cannot enter it. The launcher and the bundled Electron app
+	# then fail for these users, either at the /opt/kiro entry or deeper
+	# when Electron reads resources/ and locales/.
+	#
+	# Normalize the whole tree with "a+rX", not just the top directory:
+	#  - "a+r" adds read for all users.
+	#  - "X" (capital) adds the traverse bit to directories only, and
+	#    to files that are already executable. Data files stay 0644.
+	# This matches the rest of the install tree and keeps the executable
+	# bits that doins would have stripped. The setuid bit on
+	# chrome-sandbox is set later, so this recursive call does not
+	# affect it.
+	fperms -R a+rX /opt/kiro
+
 	# Drop bundled native binaries built for platforms other than the
 	# one this package targets (~amd64 = linux / x64 / glibc). Upstream
 	# ships multi-arch, multi-libc prebuilts inside node_modules (e.g.
