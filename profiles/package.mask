@@ -331,8 +331,12 @@ dev-util/claude-desktop-bin
 # version; unmask explicitly to pin this floor.
 =app-admin/amazon-cloudwatch-agent-1.300066.1
 
+# Oldest of the newest 5 ebuilds kept by the daily retention
+# policy. Hard-masked so a default emerge resolves to a newer
+# version; unmask explicitly to pin this floor.
+
 # retention-floor: dev-util/kiro-cli-bin
 # Oldest of the newest 5 ebuilds kept by the daily retention
 # policy. Hard-masked so a default emerge resolves to a newer
 # version; unmask explicitly to pin this floor.
-=dev-util/kiro-cli-bin-2.21.3
+=dev-util/kiro-cli-bin-2.21.4
