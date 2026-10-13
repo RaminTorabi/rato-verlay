@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-07-14
+# ebuild automatically verified at 2026-10-13
 EAPI=8
 
 inherit go-module systemd
