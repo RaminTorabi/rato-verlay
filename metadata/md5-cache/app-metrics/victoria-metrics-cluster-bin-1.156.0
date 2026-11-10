@@ -1,0 +1,14 @@
+BDEPEND=virtual/pkgconfig
+DEFINED_PHASES=install postinst
+DESCRIPTION=VictoriaMetrics cluster — prebuilt vminsert+vmselect+vmstorage
+EAPI=8
+HOMEPAGE=https://victoriametrics.com/ https://github.com/VictoriaMetrics/VictoriaMetrics
+INHERIT=systemd
+KEYWORDS=~amd64
+LICENSE=Apache-2.0
+RDEPEND=acct-group/victoria-metrics acct-user/victoria-metrics !!app-metrics/victoria-metrics-cluster
+RESTRICT=strip mirror
+SLOT=0
+SRC_URI=https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/v1.156.0/victoria-metrics-linux-amd64-v1.156.0-cluster.tar.gz
+_eclasses_=systemd	a964c0cbe818b5729da1dbfcee5be861	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5
+_md5_=d41c7f30e281213cf06b5ed9d3c8a672
