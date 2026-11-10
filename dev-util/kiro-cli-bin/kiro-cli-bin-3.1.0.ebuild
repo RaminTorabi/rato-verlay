@@ -1,5 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
+# ebuild automatically verified at 2026-11-10
 EAPI=8
 DESCRIPTION="Kiro command-line interface"
 HOMEPAGE="https://kiro.dev/docs/cli/"

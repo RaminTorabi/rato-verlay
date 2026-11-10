@@ -35,14 +35,14 @@ app-metrics/victoria-metrics-cluster-bin
 =app-admin/amazon-cloudwatch-agent-1.300071.0
 # app-admin/amazon-ssm-agent: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =app-admin/amazon-ssm-agent-3.3.5538.0
-# app-metrics/victoria-metrics-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
-=app-metrics/victoria-metrics-bin-1.143.0
-# app-metrics/victoria-metrics-cluster-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
-=app-metrics/victoria-metrics-cluster-bin-1.143.0
-# app-metrics/victoria-metrics-cluster: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
-=app-metrics/victoria-metrics-cluster-1.143.0
 # app-metrics/victoria-metrics: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =app-metrics/victoria-metrics-1.143.0
+# app-metrics/victoria-metrics-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
+=app-metrics/victoria-metrics-bin-1.143.0
+# app-metrics/victoria-metrics-cluster: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
+=app-metrics/victoria-metrics-cluster-1.143.0
+# app-metrics/victoria-metrics-cluster-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
+=app-metrics/victoria-metrics-cluster-bin-1.143.0
 # dev-util/kiro-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =dev-util/kiro-bin-1.4.51
 # dev-util/kiro-cli-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
