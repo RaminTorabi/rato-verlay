@@ -2,22 +2,24 @@
 
 A [Gentoo](https://www.gentoo.org/) ebuild repository (overlay) shipping
 AWS-related and adjacent packages on `~amd64`: the
-[Kiro](https://kiro.dev/) IDE and CLI suite, AWS Systems Manager agent,
-CloudWatch agent, EFS mount helper, Amazon DCV server and viewer, and
-VictoriaMetrics.
+[Kiro](https://kiro.dev/) IDE, CLI and Kiro Crew, AWS Systems Manager
+agent, CloudWatch agent, EFS mount helper, Amazon DCV server and viewer,
+VictoriaMetrics, and the Anthropic Claude Code CLI and desktop app.
 
-This repository contains **Portage-consumable files** — ebuilds,
+This repository contains **Portage-consumable files** - ebuilds,
 Manifests, metadata, profiles, and licenses. The CI/CD pipeline that
-automates version bumping, testing, and publishing lives in a separate
-repository:
-[rato-verlay-pipeline](https://github.com/RaminTorabi/rato-verlay-pipeline).
+automates version bumping, testing, and publishing lives in a separate,
+private repository (see "How this overlay is updated" below).
 
 ## Shipped packages
 
 | Package | Category | Keywords | License | Notes |
 |---|---|---|---|---|
 | `kiro-bin` | `dev-util` | `~amd64` | `Kiro-EULA` | Kiro desktop IDE under `/opt/kiro` |
-| `kiro-cli-bin` | `dev-util` | `~amd64` | `Kiro-CLI-EULA` | Kiro CLI suite under `/opt/kiro-cli` |
+| `kiro-cli-bin` | `dev-util` | `~amd64` | `Kiro-CLI-EULA` | Kiro CLI under `/opt/kiro-cli` (3.x: single `kiro-cli` binary; the last five 2.x releases stay available for pinning) |
+| `kirocrew-bin` | `dev-util` | `~amd64` | `Apache-2.0` | Kiro Crew desktop app (prebuilt AppImage) under `/opt/kirocrew`, launcher `kirocrew-desktop` |
+| `claude-code-bin` | `dev-util` | `~amd64` | `Anthropic-Claude-Terms` | Anthropic Claude Code CLI (prebuilt binary), `claude` |
+| `claude-desktop-bin` | `dev-util` | `~amd64` | `Anthropic-Claude-Terms` | Anthropic Claude desktop app (prebuilt, upstream beta for Debian/Ubuntu) |
 | `amazon-ssm-agent` | `app-admin` | `~amd64` | `Apache-2.0` | AWS SSM agent, built from Go source |
 | `amazon-cloudwatch-agent` | `app-admin` | `~amd64` | `MIT` | CloudWatch agent, built from Go source |
 | `amazon-efs-utils-bin` | `net-fs` | `~amd64` | `MIT` | EFS mount helper / `mount.efs`, prebuilt by AWS for AL2023 (works on glibc >= 2.34) |
@@ -30,13 +32,12 @@ repository:
 | `ssm-user` | `acct-user`, `acct-group` | `~amd64` | `GPL-2` | UID/GID owned by `amazon-ssm-agent` |
 | `victoria-metrics` | `acct-user`, `acct-group` | `~amd64` | `GPL-2` | UID/GID owned by `victoria-metrics{,-bin}` |
 
-Multiple versions are available for `amazon-ssm-agent`,
-`amazon-cloudwatch-agent`, `kiro-bin`, `kiro-cli-bin`, and
-`amazon-dcv-server-bin`. Portage installs the highest version by
-default. The DCV server overlay ships one ebuild per stable yearly
-release (2021-2025) so older hosts can pin to a specific major version
-via `/etc/portage/package.mask/rato-verlay` if needed. The DCV viewer
-ships only the latest stable release — viewer releases are infrequent.
+The daily keeps the newest five ebuilds of every package; Portage
+installs the highest version by default, and the oldest kept one is
+hard-masked in `profiles/package.mask` (unmask it to pin). The DCV server
+ebuilds cover the stable yearly releases 2023-2026, so older hosts can pin
+a specific major version via `/etc/portage/package.mask/rato-verlay` if
+needed.
 
 ## Quick start
 
@@ -58,6 +59,8 @@ EOF
 cat >> /etc/portage/package.license/rato-verlay <<'EOF'
 dev-util/kiro-bin              Kiro-EULA
 dev-util/kiro-cli-bin          Kiro-CLI-EULA
+dev-util/claude-code-bin       Anthropic-Claude-Terms
+dev-util/claude-desktop-bin    Anthropic-Claude-Terms
 net-misc/amazon-dcv-server-bin NICE-DCV-EULA
 net-misc/amazon-dcv-viewer-bin NICE-DCV-EULA
 EOF
@@ -68,9 +71,11 @@ emerge --ask dev-util/kiro-cli-bin dev-util/kiro-bin
 
 ## After install
 
-- `kiro-cli`, `kiro-cli-chat`, `kiro-cli-term`, and `kiro` are
-  symlinked into `/usr/bin/`.
-- `kiro-bin` installs an XDG `.desktop` entry and icon.
+- `kiro-cli` and `kiro` are symlinked into `/usr/bin/` (Kiro CLI 3.x no
+  longer has `kiro-cli-chat` / `kiro-cli-term`; the 2.x ebuilds still
+  install them).
+- `kiro-bin` and `kirocrew-bin` install an XDG `.desktop` entry and icon;
+  run `kirocrew-desktop` as your normal user, not as root.
 - `amazon-ssm-agent`, `amazon-cloudwatch-agent`, and
   `victoria-metrics{,-bin}` install with systemd service files.
 - `amazon-efs-utils-bin` installs `mount.efs` and the
@@ -103,7 +108,7 @@ amazon-cloudwatch-agent --version
 
 ## AWS networking helpers
 
-Not shipped by this overlay — the Gentoo tree and kernel provide what
+Not shipped by this overlay - the Gentoo tree and kernel provide what
 is needed.
 
 ### Elastic Fabric Adapter (EFA)
@@ -153,32 +158,40 @@ The pipeline runs entirely in AWS and is split across two cadences:
 A scheduled Lambda boots an EC2 instance off a pre-built Gentoo Update
 AMI. The instance:
 
-1. Reads `packages.toml` from `rato-verlay-pipeline` (the list of
-   packages to track and where to look for upstream version data).
-2. Polls each upstream endpoint (GitHub release, custom JSON, etc.).
+1. Reads `packages.toml` from the pipeline repository (the list of
+   packages to track, where to look for upstream version data, and the
+   expected download URL and release index of each package).
+2. Polls each upstream endpoint (GitHub release, custom JSON, RPM
+   repository, etc.).
 3. For every package whose upstream is newer than the highest in-tree
-   ebuild, copies the existing ebuild to the new version, stamps the
-   new release, and runs `pkgdev manifest` to refresh hashes.
-4. Validates the bump by emerging every version of the package
-   (oldest to newest) on the live instance and running a smoke test.
-5. On success, commits the new ebuilds with a noreply identity and
-   force-pushes HEAD to `main`, `dev`, and `test` on CodeCommit.
+   ebuild, checks that upstream publishes the expected file (in the
+   release index, with its sha256), copies the existing ebuild to the
+   new version, checks that it fetches exactly that file, runs
+   `pkgdev manifest`, and compares the distfile's sha256 with upstream.
+4. Emerges every new or changed ebuild (bumps, and changes on `dev`
+   that are not yet on `main`) on the live instance and runs a smoke
+   test.
+5. Stamps what passed, keeps the newest five ebuilds per package,
+   regenerates `metadata/md5-cache`, commits with a noreply identity and
+   pushes HEAD to `main`, `dev`, and `test` on CodeCommit.
 6. Self-terminates.
 
-If validation on the `dev` branch fails, the daily cascades down to
-`test`, then `main`, attempting the same bump against each ancestor
-state until one succeeds. If all three fail, the run reports failure
-via SES and writes a completion JSON to S3 with the per-branch error
-trail; nothing is pushed.
+A bump that fails in any step is dropped completely (no ebuild, no
+Manifest line, no cache entry) and the other packages still go out.
+Every failure - and every package that lags upstream for more than three
+days - is mailed to the maintainer by every run until it is fixed. If a
+change on `dev` itself fails, the daily cascades down to `test`, then
+`main`.
 
 ### Weekly (Saturday)
 
-A separate orchestration boots a Test-AMI instance, clones the
-`test` branch, and verifies every ebuild in the overlay still
-emerges cleanly (full `version_cycle_emerge` per package). Each
-verified ebuild gets a `# ebuild automatically verified at <date>`
-stamp. The squashed result is pushed to `dev` for cascade promotion;
-on a fully clean run it propagates to `test` and then to `main`.
+After the Saturday daily, the same instance clones the `test` branch
+and emerges every ebuild that does not carry a
+`# ebuild automatically verified at <date>` stamp yet, then stamps the
+ones that pass. The daily stamps every ebuild it publishes, so in
+practice the weekly only picks up ebuilds that reached the overlay
+without a daily run (it found none since 2026-08-22). A stamp records the
+first successful verification; stamped ebuilds are not re-verified.
 
 ### GitHub mirror
 
@@ -192,8 +205,7 @@ mirror cannot lose work. The action can also be triggered manually
 via `workflow_dispatch`.
 
 Pipeline infrastructure (Lambda code, IAM, CloudFormation/SAM
-templates, packages.toml, builder scripts) lives in
-[rato-verlay-pipeline](https://github.com/RaminTorabi/rato-verlay-pipeline).
+templates, packages.toml, builder scripts) lives in private repositories.
 
 ## Repository layout
 
@@ -203,12 +215,12 @@ rato-verlay/
 ├── acct-user/                  # UIDs for ssm-user, victoria-metrics
 ├── app-admin/                  # SSM + CloudWatch agent ebuilds
 ├── app-metrics/                # VictoriaMetrics (source + bin) ebuilds
-├── dev-util/                   # Kiro IDE + CLI ebuilds
+├── dev-util/                   # Kiro IDE, CLI, Crew + Claude ebuilds
 ├── net-fs/                     # amazon-efs-utils-bin ebuild
 ├── net-misc/                   # DCV server + viewer ebuilds
 ├── metadata/layout.conf        # Portage repository metadata
 ├── profiles/                   # repo_name + categories
-├── licenses/                   # EULA texts (Kiro, DCV)
+├── licenses/                   # EULA texts (Kiro, DCV, Anthropic)
 ├── .github/workflows/          # GitHub Action: sync from CodeCommit
 ├── LICENSE                     # GPL-2 (overlay scripts only)
 └── README.md
@@ -219,18 +231,17 @@ rato-verlay/
 This repo has three branches that always converge after a successful
 daily run:
 
-- **`main`** — what the public should consume. Every commit reaching
+- **`main`** - what the public should consume. Every commit reaching
   `main` was either created by an automated daily/weekly run or
   manually verified.
-- **`dev`** — the daily's first attempt branch. On success the daily
-  pushes the same HEAD to `main` and `test` in addition to `dev`. On
-  failure it cascades down to `test` and then `main`.
-- **`test`** — the weekly's verification branch. Holds the squashed
-  per-package stamps once the weekly has emerged every ebuild end-to-
-  end on a real Gentoo instance.
+- **`dev`** - the daily's first attempt branch and the entry point for
+  hand-written changes. The daily emerges what differs from `main` and
+  then pushes the same HEAD to `main` and `test`. On failure it cascades
+  down to `test` and then `main`.
+- **`test`** - the weekly's verification branch.
 
 History is rewritten on all three branches after large structural
-changes (squash, public-release prep) — clone with `--depth=1` if you
+changes (squash, public-release prep) - clone with `--depth=1` if you
 want a current snapshot, or accept that `git pull` may need a `--rebase`
 or fresh clone after such events. Tags will be added to mark stable
 points if there is demand.
