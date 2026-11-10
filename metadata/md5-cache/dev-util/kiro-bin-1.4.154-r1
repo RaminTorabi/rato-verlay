@@ -10,5 +10,5 @@ RDEPEND=>=sys-libs/glibc-2.34 dev-libs/glib:2 dev-libs/nss dev-libs/nspr app-cry
 RESTRICT=strip mirror bindist
 SLOT=0
 SRC_URI=https://prod.download.desktop.kiro.dev/releases/stable/linux-x64/signed/1.4.154/tar/kiro-ide-1.4.154-stable-linux-x64.tar.gz
-_eclasses_=desktop	e447b5f77146d69797e9f03ff177f3f1	xdg-utils	42869b3c8d86a70ef3cf75165a395e09	xdg	3ef49a87c52c8b77c476351195dfe575
-_md5_=a0f781029977786a68360c9816614ffa
+_eclasses_=desktop	e447b5f77146d69797e9f03ff177f3f1	xdg	3ef49a87c52c8b77c476351195dfe575	xdg-utils	42869b3c8d86a70ef3cf75165a395e09
+_md5_=7f7f55311009404176905ad5015f7465

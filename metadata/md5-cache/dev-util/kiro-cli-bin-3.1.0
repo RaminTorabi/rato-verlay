@@ -1,0 +1,12 @@
+BDEPEND=app-arch/unzip
+DEFINED_PHASES=install postinst
+DESCRIPTION=Kiro command-line interface
+EAPI=8
+HOMEPAGE=https://kiro.dev/docs/cli/
+KEYWORDS=~amd64
+LICENSE=Kiro-CLI-EULA
+RDEPEND=>=sys-libs/glibc-2.34
+RESTRICT=strip mirror bindist
+SLOT=0
+SRC_URI=https://prod.download.cli.kiro.dev/stable/3.1.0/kirocli-x86_64-linux.zip -> kiro-cli-bin-3.1.0.zip
+_md5_=5bd3ebcfa440537e722688a62a038f96

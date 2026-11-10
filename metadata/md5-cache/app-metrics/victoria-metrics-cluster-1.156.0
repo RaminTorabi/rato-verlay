@@ -1,4 +1,4 @@
-BDEPEND=>=dev-lang/go-1.26.3 >=dev-lang/go-1.24.11:= app-arch/unzip virtual/pkgconfig
+BDEPEND=>=dev-lang/go-1.27.3 >=dev-lang/go-1.24.11:= app-arch/unzip virtual/pkgconfig
 DEFINED_PHASES=compile install postinst unpack
 DESCRIPTION=VictoriaMetrics cluster (vminsert + vmselect + vmstorage)
 EAPI=8
@@ -11,4 +11,4 @@ RESTRICT=mirror
 SLOT=0
 SRC_URI=https://github.com/VictoriaMetrics/VictoriaMetrics/archive/refs/tags/v1.156.0-cluster.tar.gz -> victoria-metrics-cluster-1.156.0.tar.gz
 _eclasses_=flag-o-matic	fd3558f73f6503093adee69adf41020d	go-env	fca4e820393c2eac25a944be8bdf6a3a	go-module	3d4b6f3f29b3ebdeb708785b3cb1743b	multiprocessing	45d0620f25c2f063ad6276ecd9ed9399	sysroot	4c36abaf94ebd3ab32f8abea9a444121	systemd	a964c0cbe818b5729da1dbfcee5be861	toolchain-funcs	58a918e3a42d0156f010dcfd43725be5
-_md5_=af34d74de03b45443a041a3c740a3ca9
+_md5_=390e99deb24450e88c3f04632ef57336
