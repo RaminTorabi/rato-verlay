@@ -11,4 +11,4 @@ RESTRICT=strip mirror bindist
 SLOT=0
 SRC_URI=https://prod.download.desktop.kiro.dev/releases/stable/linux-x64/signed/1.4.62/tar/kiro-ide-1.4.62-stable-linux-x64.tar.gz
 _eclasses_=desktop	e447b5f77146d69797e9f03ff177f3f1	xdg-utils	42869b3c8d86a70ef3cf75165a395e09	xdg	3ef49a87c52c8b77c476351195dfe575
-_md5_=37a5f46f734b889762dbd106337f6ee7
+_md5_=f4b68c06497635d18248a66b65a117a3

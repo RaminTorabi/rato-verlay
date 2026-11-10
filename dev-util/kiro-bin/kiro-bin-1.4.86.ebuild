@@ -49,8 +49,8 @@ src_install() {
 	# Install the entire upstream tree under /opt/kiro/ while preserving
 	# the executable bits on the binaries. `doins` strips the +x bit, so
 	# we use cp -a inside the image and then fix ownership and special
-	# directory modes afterwards. This mirrors the stowe-verlay and
-	# upstream-installer conventions for this prebuilt bundle.
+	# directory modes afterwards. This mirrors the upstream installer's
+	# conventions for this prebuilt bundle.
 	local dest="${ED}/opt/kiro"
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
