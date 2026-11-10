@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-10
 EAPI=8
 
 inherit go-module systemd
@@ -20,12 +19,11 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror"
 
-# go.mod requires go 1.26.3+, but the eclass already enforces a current
-# go via its own BDEPEND. Override only when we need a higher floor
-# than the eclass default. Note: 1.26.3 is currently ~amd64 in the
-# Gentoo tree, so emerging this ebuild also pulls in dev-lang/go's
-# unstable keyword via the rato-verlay accept_keywords list.
-BDEPEND=">=dev-lang/go-1.26.3"
+# go.mod of v1.156.0 requires go 1.27.3+, a higher floor than the
+# go-module eclass default, so it is declared here. Raise it when a
+# future go.mod raises its `go` line (the daily bump only copies this
+# ebuild; a too-low floor shows up as an emerge failure and an alert).
+BDEPEND=">=dev-lang/go-1.27.3"
 
 RDEPEND="
 	acct-group/victoria-metrics
@@ -34,7 +32,7 @@ RDEPEND="
 "
 
 src_compile() {
-	# Upstream ships vendor/ under tag v1.143.0, so the build is
+	# Upstream ships vendor/ under tag v${PV}, so the build is
 	# fully offline (no network-sandbox lift needed). Use
 	# `-mod=vendor` to make Go consume the vendored copies and
 	# refuse to fetch from the proxy on cache miss.

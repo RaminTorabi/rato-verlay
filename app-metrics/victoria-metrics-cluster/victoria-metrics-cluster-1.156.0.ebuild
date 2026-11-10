@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-10
 EAPI=8
 
 inherit go-module systemd
@@ -31,7 +30,7 @@ RESTRICT="mirror"
 
 # Match the floor enforced in the single-node sibling so the same
 # cross-package go-toolchain merge plan applies.
-BDEPEND=">=dev-lang/go-1.26.3"
+BDEPEND=">=dev-lang/go-1.27.3"
 
 # Cluster shares the service account with the single-node sibling.
 # Both variants own files under /var/lib/victoria-metrics/, but
