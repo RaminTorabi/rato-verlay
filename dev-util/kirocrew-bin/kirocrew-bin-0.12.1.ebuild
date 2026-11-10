@@ -162,6 +162,19 @@ src_install() {
 	fi
 }
 
+pkg_preinst() {
+	xdg_pkg_preinst
+	# Portage keeps the mode of a directory that already exists on the
+	# live system, so after an upgrade from 0.2.0 (installed with the
+	# AppDir's 0700 directories) /opt/kirocrew would stay unreadable for
+	# non-root users although the image is 0755. Fix the existing
+	# directories before the merge; files are replaced with image modes.
+	if [[ -d ${EROOT}/opt/kirocrew ]]; then
+		find "${EROOT}/opt/kirocrew" -type d -exec chmod 0755 {} + \
+			|| die "chmod of the existing /opt/kirocrew failed"
+	fi
+}
+
 pkg_postinst() {
 	xdg_pkg_postinst
 	elog "Kiro Crew is available as 'kirocrew-desktop' (and an XDG menu entry)."
