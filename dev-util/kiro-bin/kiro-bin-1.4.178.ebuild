@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-10
+# ebuild automatically verified at 2026-11-13
 EAPI=8
 
 inherit desktop xdg
@@ -54,6 +54,14 @@ src_install() {
 	local dest="${ED}/opt/kiro"
 	mkdir -p "${dest}" || die "mkdir failed"
 	cp -a . "${dest}/" || die "cp failed"
+	# cp -a keeps upstream's mode on every directory it copies, and the
+	# unpacked tree can carry 0700 directories, which locks non-root
+	# users out of /opt/kiro. Normalise the whole tree: directories
+	# 0755, files 0644, executables 0755 (X keeps the execute bit only
+	# where upstream set one). chrome-sandbox gets its setuid bit below.
+	# Reported in https://github.com/RaminTorabi/rato-verlay/pull/1
+	# (Marius Peter).
+	chmod -R u=rwX,go=rX "${dest}" || die "chmod failed"
 
 	# Drop bundled native binaries built for platforms other than the
 	# one this package targets (~amd64 = linux / x64 / glibc). Upstream
@@ -107,6 +115,18 @@ src_install() {
 		newicon -s 256 "${icon_src}" kiro.png
 	else
 		ewarn "Icon not found at ${icon_src}; desktop entry will fall back to a generic icon."
+	fi
+}
+
+pkg_preinst() {
+	xdg_pkg_preinst
+	# Portage keeps the mode of a directory that already exists on the
+	# live system, so an earlier install with restrictive upstream modes
+	# would survive the upgrade. Fix the existing directories before the
+	# merge; files are replaced with the image modes.
+	if [[ -d ${EROOT}/opt/kiro ]]; then
+		find "${EROOT}/opt/kiro" -type d -exec chmod 0755 {} + \
+			|| die "chmod of the existing /opt/kiro failed"
 	fi
 }
 
