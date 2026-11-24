@@ -1,6 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
+# ebuild automatically verified at 2026-11-24
 EAPI=8
 
 # el9 RPMs use zstd compression - must be set before inherit rpm
