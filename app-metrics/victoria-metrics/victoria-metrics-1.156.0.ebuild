@@ -22,8 +22,8 @@ RESTRICT="mirror"
 
 # The Go floor is the go line of upstream's go.mod (higher than the
 # go-module eclass default). The daily bump raises it from the new
-# release's go.mod; when that Go is still ~amd64 in ::gentoo, accept
-# it with "dev-lang/go ~amd64".
+# release's go.mod. While ::gentoo has that Go only as ~amd64, this
+# ebuild stays ~amd64 too.
 BDEPEND=">=dev-lang/go-1.27.3"
 
 RDEPEND="
