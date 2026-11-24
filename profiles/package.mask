@@ -58,5 +58,5 @@ app-metrics/victoria-metrics-cluster-bin
 # net-misc/amazon-dcv-server-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =net-misc/amazon-dcv-server-bin-2023.1.17701
 # net-misc/amazon-dcv-viewer-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
-=net-misc/amazon-dcv-viewer-bin-2025.0.8846
+=net-misc/amazon-dcv-viewer-bin-2025.0.8846-r1
 # END retention floors

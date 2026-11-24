@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-10-30
 EAPI=8
 
 # el9 RPMs use zstd compression - must be set before inherit rpm
@@ -31,6 +30,13 @@ QA_PREBUILT="
 	usr/libexec/${PN}/*
 "
 
+# gnome-base/dconf: the RPM ships
+# usr/lib64/dcvviewer/gio/modules/libdconfsettings.so as a symlink to
+# the system's /usr/lib64/gio/modules/libdconfsettings.so. The
+# viewer's launcher points GIO_EXTRA_MODULES at that directory, so the
+# link is how its bundled GLib finds the dconf GSettings backend (its
+# settings, com.nicesoftware.DcvViewer, persist only through it).
+# Without dconf the link dangles and Portage warns about it.
 RDEPEND="
 	sys-libs/glibc
 	x11-libs/libX11
@@ -50,6 +56,7 @@ RDEPEND="
 	dev-libs/nss
 	dev-libs/nspr
 	dev-libs/libpcre2
+	gnome-base/dconf
 "
 
 S="${WORKDIR}"
@@ -96,10 +103,12 @@ src_install() {
 pkg_postinst() {
 	xdg_desktop_database_update
 	xdg_icon_cache_update
+	xdg_mimeinfo_database_update
 	elog "Amazon DCV viewer installed. Launch with: dcvviewer <connection-url>"
 }
 
 pkg_postrm() {
 	xdg_desktop_database_update
 	xdg_icon_cache_update
+	xdg_mimeinfo_database_update
 }
