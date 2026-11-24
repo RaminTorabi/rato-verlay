@@ -20,10 +20,10 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror"
 
-# go.mod of v1.156.0 requires go 1.27.3+, a higher floor than the
-# go-module eclass default, so it is declared here. Raise it when a
-# future go.mod raises its `go` line (the daily bump only copies this
-# ebuild; a too-low floor shows up as an emerge failure and an alert).
+# The Go floor is the go line of upstream's go.mod (higher than the
+# go-module eclass default). The daily bump raises it from the new
+# release's go.mod; when that Go is still ~amd64 in ::gentoo, accept
+# it with "dev-lang/go ~amd64".
 BDEPEND=">=dev-lang/go-1.27.3"
 
 RDEPEND="
