@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    Claude Desktop, Anthropic's Claude app (Chat, Cowork, Claude Code), as
+    a repackage of the amd64 .deb from Anthropic's apt repository
+    (downloads.claude.ai/claude-desktop/apt/stable, suite stable). The
+    Electron bundle is installed under /usr/lib/claude-desktop with the
+    claude-desktop launcher, the desktop entry and the icons. Upstream's
+    Linux app is a beta for Debian and Ubuntu; it does not update itself,
+    so update by upgrading the package.
+  </longdescription>
+</pkgmetadata>

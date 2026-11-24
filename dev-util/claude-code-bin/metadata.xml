@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE pkgmetadata SYSTEM "https://www.gentoo.org/dtd/metadata.dtd">
+<pkgmetadata>
+  <maintainer type="person">
+    <email>16882282+RaminTorabi@users.noreply.github.com</email>
+    <name>Ramin Torabi</name>
+  </maintainer>
+  <longdescription lang="en">
+    Claude Code, Anthropic's agentic coding CLI, as the prebuilt native
+    linux-x64 binary from Anthropic's release endpoint
+    (downloads.claude.ai/claude-code-releases), the same file upstream's
+    install.sh downloads and verifies against the release's manifest.json.
+    Installed as /opt/claude-code/bin/claude with a /usr/bin/claude
+    symlink. Versions follow upstream's stable channel; the ebuild pins
+    the version, so update by upgrading the package, not with
+    'claude update'.
+  </longdescription>
+</pkgmetadata>
