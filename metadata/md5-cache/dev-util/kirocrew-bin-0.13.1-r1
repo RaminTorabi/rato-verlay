@@ -11,4 +11,4 @@ RESTRICT=strip mirror
 SLOT=0
 SRC_URI=https://github.com/kirodotdev/KiroCrew/releases/download/v0.13.1/KiroCrew-0.13.1-x86_64.AppImage -> kirocrew-bin-0.13.1.AppImage
 _eclasses_=desktop	e447b5f77146d69797e9f03ff177f3f1	xdg	3ef49a87c52c8b77c476351195dfe575	xdg-utils	42869b3c8d86a70ef3cf75165a395e09
-_md5_=1aca9f5371d3306e23723832c64ff362
+_md5_=7876deb2c7fc23d708725e87c41277c3

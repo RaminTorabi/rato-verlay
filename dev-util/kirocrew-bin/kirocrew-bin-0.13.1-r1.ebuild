@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-22
 EAPI=8
 
 inherit desktop xdg
@@ -107,10 +106,14 @@ src_install() {
 	#  - the vendored llama.cpp libs for every non-host platform
 	#    (linux_aarch64, macos_*, win_amd64; Portage's soname scanner
 	#    flags the aarch64 ones' unresolved ld-linux-aarch64 deps),
-	#  - AppImage legacy-desktop compat shims (libappindicator/
-	#    libgconf) that dangle against libs Gentoo no longer ships;
-	#    Electron only dlopens them opportunistically on ancient
-	#    desktops and runs fine without.
+	#  - AppImage legacy-desktop compat shims: upstream ships the GTK3
+	#    build libappindicator3.so.1.0.0 (plus its soname links) and
+	#    libgconf-2.so.4.1.5, which need libdbusmenu-glib/-gtk3 and
+	#    dbus-glib that this ebuild does not pull in. Portage reported
+	#    them as unresolved sonames on every install up to 0.13.1 (the
+	#    old prune named libappindicator.so.1 / libgconf-2.so.4 and
+	#    missed the real files). Electron only dlopens them
+	#    opportunistically on ancient desktops and runs fine without.
 	# Guarded find so a future upstream layout change can never die.
 	local _vend
 	while IFS= read -r -d '' _vend; do
@@ -118,7 +121,7 @@ src_install() {
 	done < <(find "${dest}"/resources/backend-dist -type d \
 		-path '*/_vendor/llama_cpp_libs/*' ! -name 'linux_x86_64' \
 		-print0 2>/dev/null)
-	rm -f "${dest}"/usr/lib/libappindicator.so.1 "${dest}"/usr/lib/libgconf-2.so.4
+	rm -f "${dest}"/usr/lib/libappindicator*.so* "${dest}"/usr/lib/libgconf-2.so*
 	rmdir --ignore-fail-on-non-empty "${dest}/usr/lib" "${dest}/usr" 2>/dev/null || true
 
 	# Known-benign remaining QA notice: the bundled PyInstaller
