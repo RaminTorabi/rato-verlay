@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-10
 EAPI=8
 
 inherit go-module systemd
@@ -15,7 +14,9 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror network-sandbox"
 
-BDEPEND=">=dev-lang/go-1.25"
+# The Go floor is the go line of upstream's go.mod. The daily bump raises
+# it from the new release's go.mod.
+BDEPEND=">=dev-lang/go-1.26"
 
 RDEPEND="
 	sys-libs/glibc
@@ -29,16 +30,19 @@ RDEPEND="
 # `failed to find agent identity` because the worker was trying to
 # bootstrap itself as if it were the top-level agent process.
 #
-# See upstream makefile `build-any-%` target — the binaries and their
+# See upstream makefile `build-any-%` target - the binaries and their
 # source paths match this list exactly.
 src_compile() {
-	local ldflags="-s -w -X github.com/aws/amazon-ssm-agent/agent/version.Version=${PV}"
+	# No -s -w in the ldflags: Portage strips the binaries itself
+	# (FEATURES=strip / splitdebug, RESTRICT=strip); pre-stripped files
+	# fail its QA check.
+	local ldflags="-X github.com/aws/amazon-ssm-agent/agent/version.Version=${PV}"
 
 	# Top-level launcher (the binary systemd starts).
 	ego build -o amazon-ssm-agent -ldflags "${ldflags}" \
 		./core
 
-	# Main worker — handles identity, message loop, docs, sessions.
+	# Main worker - handles identity, message loop, docs, sessions.
 	ego build -o ssm-agent-worker -ldflags "${ldflags}" \
 		./agent
 
@@ -72,7 +76,7 @@ src_install() {
 	newins amazon-ssm-agent.json.template amazon-ssm-agent.json.template
 	newins seelog_unix.xml seelog.xml.template
 
-	# Runtime state directories — owned by root, but the agent creates
+	# Runtime state directories - owned by root, but the agent creates
 	# and writes to these during normal operation. Without them pre-
 	# created, the agent's `failed to read runtime config` warning
 	# escalates into startup failure on some profiles.
