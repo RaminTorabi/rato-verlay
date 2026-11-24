@@ -54,10 +54,6 @@ emerge --sync rato-verlay
 # Accept keywords and licenses (per-package)
 cat >> /etc/portage/package.accept_keywords/rato-verlay <<'EOF'
 */*::rato-verlay ~amd64
-# Only for the source-built Go packages (amazon-ssm-agent,
-# amazon-cloudwatch-agent, victoria-metrics*): their go.mod may need a
-# Go that is still ~amd64 in ::gentoo. Uncomment if emerge asks for it:
-#dev-lang/go ~amd64
 EOF
 
 cat >> /etc/portage/package.license/rato-verlay <<'EOF'
@@ -72,6 +68,27 @@ EOF
 # Install
 emerge --ask dev-util/kiro-cli-bin dev-util/kiro-bin
 ```
+
+### Keywords
+
+Every ebuild in this overlay is keyworded `~amd64`, and the line above
+accepts exactly that. An ebuild also stays `~amd64` as long as a
+dependency floor it needs exists only as `~amd64` in ::gentoo. Example
+(2026-11-24): `app-metrics/victoria-metrics-1.157.0` and
+`victoria-metrics-cluster-1.157.0` need `>=dev-lang/go-1.27.4` (the `go`
+line of upstream's `go.mod`), which ::gentoo has only as `~amd64`;
+1.156.0 needs `>=dev-lang/go-1.27.3`, which is stable. Portage reports
+the `dev-lang/go` keyword such an update needs. To keep the previous
+release instead, mask the new one (e.g.
+`>=app-metrics/victoria-metrics-1.157.0` in
+`/etc/portage/package.mask/rato-verlay`).
+
+The daily pipeline (below) applies the same rule: it keywords a bump of
+an `amd64` ebuild `~amd64` when one of its dependency floors has no
+stable version in ::gentoo (a `# ami-gentoo floor-keyword:` comment above
+`KEYWORDS` names the floor), and keywords the newest such ebuild `amd64`
+again once ::gentoo has a stable version of every floor. It never makes a
+`~amd64` ebuild `amd64` on any other ground.
 
 ## After install
 
@@ -173,10 +190,15 @@ AMI. The instance:
    new version, checks that it fetches exactly that file, runs
    `pkgdev manifest`, and compares the distfile's sha256 with upstream.
    For Go packages it raises the `>=dev-lang/go` floor to the `go` line
-   of the release's `go.mod`.
+   of the release's `go.mod`. A bump of an `amd64` ebuild whose
+   dependency floor has no stable version in ::gentoo is keyworded
+   `~amd64`; a marked ebuild goes back to `amd64` once every floor is
+   stable (see "Keywords" above). Keyword changes are listed in the
+   commit and in the run's result mail.
 4. Emerges every new or changed ebuild (bumps, and changes on `dev`
    that are not yet on `main`) on the live instance, on a freshly synced
-   ::gentoo tree, and runs a smoke test.
+   ::gentoo tree, and runs a smoke test. A `~amd64` dependency from
+   ::gentoo is accepted only to build a `~amd64` ebuild.
 5. Stamps what passed, keeps the newest five ebuilds per package,
    regenerates `metadata/md5-cache`, commits with a noreply identity and
    pushes HEAD to `main`, `dev`, and `test` on CodeCommit.
