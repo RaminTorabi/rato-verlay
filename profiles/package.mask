@@ -43,6 +43,10 @@ app-metrics/victoria-metrics-cluster-bin
 =app-metrics/victoria-metrics-cluster-1.143.0
 # app-metrics/victoria-metrics-cluster-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =app-metrics/victoria-metrics-cluster-bin-1.143.0
+# dev-util/claude-code-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
+=dev-util/claude-code-bin-2.1.201
+# dev-util/claude-desktop-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
+=dev-util/claude-desktop-bin-1.18286.0
 # dev-util/kiro-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =dev-util/kiro-bin-1.4.154-r1
 # dev-util/kiro-cli-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
