@@ -40,7 +40,7 @@ app-metrics/victoria-metrics-cluster-bin
 # app-metrics/victoria-metrics-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =app-metrics/victoria-metrics-bin-1.143.0
 # app-metrics/victoria-metrics-cluster: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
-=app-metrics/victoria-metrics-cluster-1.143.0
+=app-metrics/victoria-metrics-cluster-1.143.0-r1
 # app-metrics/victoria-metrics-cluster-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it
 =app-metrics/victoria-metrics-cluster-bin-1.143.0
 # dev-util/claude-code-bin: oldest kept ebuild (the daily keeps the newest 5); unmask to pin it

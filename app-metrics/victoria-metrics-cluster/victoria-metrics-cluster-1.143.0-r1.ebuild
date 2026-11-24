@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-05-30
 EAPI=8
 
 inherit go-module systemd
@@ -42,7 +41,7 @@ BDEPEND=">=dev-lang/go-1.26.3"
 #
 # The !! blocker against -bin keeps Portage from picking both
 # source and prebuilt cluster variants on the same host. There is
-# intentionally NO blocker against the single-node sibling — they
+# intentionally NO blocker against the single-node sibling - they
 # install non-overlapping binary names and unit files, and on the
 # rare host where someone wants both available, Portage shouldn't
 # get in the way.
@@ -80,11 +79,11 @@ src_install() {
 	newexe vmselect  vmselect-prod
 	newexe vmstorage vmstorage-prod
 
-	# Convenience symlinks under /usr/bin — admins can run
+	# Convenience symlinks under /usr/bin - admins can run
 	# `vminsert --version` etc. without prefixing the path.
-	dosym /opt/victoriametrics/vminsert-prod  /usr/bin/vminsert
-	dosym /opt/victoriametrics/vmselect-prod  /usr/bin/vmselect
-	dosym /opt/victoriametrics/vmstorage-prod /usr/bin/vmstorage
+	dosym -r /opt/victoriametrics/vminsert-prod  /usr/bin/vminsert
+	dosym -r /opt/victoriametrics/vmselect-prod  /usr/bin/vmselect
+	dosym -r /opt/victoriametrics/vmstorage-prod /usr/bin/vmstorage
 
 	# Storage path. Cluster uses /var/lib/victoria-metrics/cluster/
 	# so it doesn't collide with the single-node sibling's data
@@ -118,7 +117,7 @@ pkg_postinst() {
 	elog "  - Storage:       /var/lib/victoria-metrics/cluster/ (owned by victoria-metrics)"
 	elog "  - Systemd units: vmstorage.service, vminsert.service, vmselect.service"
 	elog ""
-	elog "Cluster ports (defaults — override via -httpListenAddr in a unit drop-in):"
+	elog "Cluster ports (defaults - override via -httpListenAddr in a unit drop-in):"
 	elog "  - vmstorage  http :8482   vminsert RPC :8400   vmselect RPC :8401"
 	elog "  - vminsert   http :8480   write API at /insert/<accountID>/<suffix>"
 	elog "  - vmselect   http :8481   read API  at /select/<accountID>/<suffix>"
