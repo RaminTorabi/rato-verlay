@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-24
 EAPI=8
 
 inherit go-module systemd
@@ -15,31 +14,34 @@ SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror network-sandbox"
 
-BDEPEND=">=dev-lang/go-1.25"
+# The Go floor is the go line of upstream's go.mod. The daily bump raises
+# it from the new release's go.mod.
+BDEPEND=">=dev-lang/go-1.25.8"
 
 RDEPEND="
 	sys-libs/glibc
 "
 
 src_compile() {
+	# No -s -w in the ldflags: Portage strips the binaries itself
+	# (FEATURES=strip / splitdebug, RESTRICT=strip); pre-stripped files
+	# fail its QA check.
+
 	# Main agent binary
 	ego build -o amazon-cloudwatch-agent \
-		-ldflags "-s -w -X github.com/aws/amazon-cloudwatch-agent/cfg/agentinfo.VersionStr=${PV}" \
+		-ldflags "-X github.com/aws/amazon-cloudwatch-agent/cfg/agentinfo.VersionStr=${PV}" \
 		./cmd/amazon-cloudwatch-agent
 
 	# Config translator (required for agent startup)
 	ego build -o config-translator \
-		-ldflags "-s -w" \
 		./cmd/config-translator
 
 	# Start wrapper
 	ego build -o start-amazon-cloudwatch-agent \
-		-ldflags "-s -w" \
 		./cmd/start-amazon-cloudwatch-agent
 
 	# Config downloader
 	ego build -o config-downloader \
-		-ldflags "-s -w" \
 		./cmd/config-downloader
 }
 
@@ -66,8 +68,8 @@ src_install() {
 	# Backward-compat symlinks in /usr/bin so `command -v amazon-cloudwatch-agent`
 	# still finds the binary (used by smoke tests and by the existing
 	# builder-scripts that grep for PATH-resolvable binaries).
-	dosym "${opt_bin}/amazon-cloudwatch-agent" /usr/bin/amazon-cloudwatch-agent
-	dosym "${opt_bin}/amazon-cloudwatch-agent-ctl" /usr/bin/amazon-cloudwatch-agent-ctl
+	dosym -r "${opt_bin}/amazon-cloudwatch-agent" /usr/bin/amazon-cloudwatch-agent
+	dosym -r "${opt_bin}/amazon-cloudwatch-agent-ctl" /usr/bin/amazon-cloudwatch-agent-ctl
 
 	newinitd "${FILESDIR}"/amazon-cloudwatch-agent.initd amazon-cloudwatch-agent
 	systemd_dounit "${FILESDIR}"/amazon-cloudwatch-agent.service
