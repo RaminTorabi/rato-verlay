@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-24
 EAPI=8
 
 inherit go-module systemd
@@ -13,18 +12,19 @@ S="${WORKDIR}/VictoriaMetrics-${PV}"
 
 # Apache-2.0 covers the OSS components built from the public GitHub
 # tarball. The proprietary "Enterprise" features are NOT compiled in
-# from this source — those ship as separate closed-source binaries
+# from this source - those ship as separate closed-source binaries
 # from victoriametrics.com and aren't reachable from this build path.
 LICENSE="Apache-2.0"
 SLOT="0"
 KEYWORDS="~amd64"
 RESTRICT="mirror"
 
-# The Go floor is the go line of upstream's go.mod (higher than the
-# go-module eclass default). The daily bump raises it from the new
-# release's go.mod. While ::gentoo has that Go only as ~amd64, this
-# ebuild stays ~amd64 too.
-BDEPEND=">=dev-lang/go-1.27.4"
+# go.mod requires go 1.26.3+, but the eclass already enforces a current
+# go via its own BDEPEND. Override only when we need a higher floor
+# than the eclass default. Note: 1.26.3 is currently ~amd64 in the
+# Gentoo tree, so emerging this ebuild also pulls in dev-lang/go's
+# unstable keyword via the rato-verlay accept_keywords list.
+BDEPEND=">=dev-lang/go-1.26.3"
 
 RDEPEND="
 	acct-group/victoria-metrics
@@ -33,7 +33,7 @@ RDEPEND="
 "
 
 src_compile() {
-	# Upstream ships vendor/ under tag v${PV}, so the build is
+	# Upstream ships vendor/ under tag v1.143.0, so the build is
 	# fully offline (no network-sandbox lift needed). Use
 	# `-mod=vendor` to make Go consume the vendored copies and
 	# refuse to fetch from the proxy on cache miss.
@@ -61,11 +61,11 @@ src_install() {
 
 	# Convenience symlinks under /usr/bin so admins can run any of
 	# these directly without prefixing the install path.
-	dosym /opt/victoriametrics/victoria-metrics-prod /usr/bin/victoria-metrics
-	dosym /opt/victoriametrics/vmagent               /usr/bin/vmagent
-	dosym /opt/victoriametrics/vmctl                 /usr/bin/vmctl
-	dosym /opt/victoriametrics/vmbackup              /usr/bin/vmbackup
-	dosym /opt/victoriametrics/vmrestore             /usr/bin/vmrestore
+	dosym -r /opt/victoriametrics/victoria-metrics-prod /usr/bin/victoria-metrics
+	dosym -r /opt/victoriametrics/vmagent               /usr/bin/vmagent
+	dosym -r /opt/victoriametrics/vmctl                 /usr/bin/vmctl
+	dosym -r /opt/victoriametrics/vmbackup              /usr/bin/vmbackup
+	dosym -r /opt/victoriametrics/vmrestore             /usr/bin/vmrestore
 
 	# Storage path. Mode 0750 so only the service account can read
 	# the on-disk format. Owner comes from the acct-user package.

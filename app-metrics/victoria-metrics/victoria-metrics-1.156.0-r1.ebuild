@@ -1,7 +1,6 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-24
 EAPI=8
 
 inherit go-module systemd
@@ -13,7 +12,7 @@ S="${WORKDIR}/VictoriaMetrics-${PV}"
 
 # Apache-2.0 covers the OSS components built from the public GitHub
 # tarball. The proprietary "Enterprise" features are NOT compiled in
-# from this source — those ship as separate closed-source binaries
+# from this source - those ship as separate closed-source binaries
 # from victoriametrics.com and aren't reachable from this build path.
 LICENSE="Apache-2.0"
 SLOT="0"
@@ -61,11 +60,11 @@ src_install() {
 
 	# Convenience symlinks under /usr/bin so admins can run any of
 	# these directly without prefixing the install path.
-	dosym /opt/victoriametrics/victoria-metrics-prod /usr/bin/victoria-metrics
-	dosym /opt/victoriametrics/vmagent               /usr/bin/vmagent
-	dosym /opt/victoriametrics/vmctl                 /usr/bin/vmctl
-	dosym /opt/victoriametrics/vmbackup              /usr/bin/vmbackup
-	dosym /opt/victoriametrics/vmrestore             /usr/bin/vmrestore
+	dosym -r /opt/victoriametrics/victoria-metrics-prod /usr/bin/victoria-metrics
+	dosym -r /opt/victoriametrics/vmagent               /usr/bin/vmagent
+	dosym -r /opt/victoriametrics/vmctl                 /usr/bin/vmctl
+	dosym -r /opt/victoriametrics/vmbackup              /usr/bin/vmbackup
+	dosym -r /opt/victoriametrics/vmrestore             /usr/bin/vmrestore
 
 	# Storage path. Mode 0750 so only the service account can read
 	# the on-disk format. Owner comes from the acct-user package.
