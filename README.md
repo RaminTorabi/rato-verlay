@@ -54,6 +54,10 @@ emerge --sync rato-verlay
 # Accept keywords and licenses (per-package)
 cat >> /etc/portage/package.accept_keywords/rato-verlay <<'EOF'
 */*::rato-verlay ~amd64
+# Only for the source-built Go packages (amazon-ssm-agent,
+# amazon-cloudwatch-agent, victoria-metrics*): their go.mod may need a
+# Go that is still ~amd64 in ::gentoo. Uncomment if emerge asks for it:
+#dev-lang/go ~amd64
 EOF
 
 cat >> /etc/portage/package.license/rato-verlay <<'EOF'
@@ -168,9 +172,11 @@ AMI. The instance:
    release index, with its sha256), copies the existing ebuild to the
    new version, checks that it fetches exactly that file, runs
    `pkgdev manifest`, and compares the distfile's sha256 with upstream.
+   For Go packages it raises the `>=dev-lang/go` floor to the `go` line
+   of the release's `go.mod`.
 4. Emerges every new or changed ebuild (bumps, and changes on `dev`
-   that are not yet on `main`) on the live instance and runs a smoke
-   test.
+   that are not yet on `main`) on the live instance, on a freshly synced
+   ::gentoo tree, and runs a smoke test.
 5. Stamps what passed, keeps the newest five ebuilds per package,
    regenerates `metadata/md5-cache`, commits with a noreply identity and
    pushes HEAD to `main`, `dev`, and `test` on CodeCommit.
@@ -196,7 +202,8 @@ first successful verification; stamped ebuilds are not re-verified.
 ### GitHub mirror
 
 A scheduled GitHub Action ([`sync-from-codecommit.yml`](./.github/workflows/sync-from-codecommit.yml))
-runs at 05:00 UTC. It assumes a CodeCommit-pull IAM role via OIDC,
+is scheduled for 05:00 UTC; GitHub often starts scheduled runs hours
+later. It assumes a CodeCommit-pull IAM role via OIDC,
 fetches `main`, `dev`, and `test` from CodeCommit, and pushes each
 branch to this GitHub repository. Branches with a fast-forward
 relationship are FF-pushed; divergent branches (after a weekly
