@@ -1,7 +1,7 @@
 # Copyright 2026 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
-# ebuild automatically verified at 2026-11-13
+# ebuild automatically verified at 2026-11-26
 EAPI=8
 
 inherit desktop xdg
